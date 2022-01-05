@@ -1,6 +1,7 @@
 # fyp
 
 a [Sails v1](https://sailsjs.com) application
+Product Comparison System
 
 
 ### Links
