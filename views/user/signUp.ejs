@@ -1,0 +1,85 @@
+<form action="/user/signUp" method="POST" onsubmit="submitForm(this);return false">
+    <div class="field">
+        <h1 style="font-size:5vw; color:rgb(34, 152, 230)">SignUp</h1>
+    </div>
+    <div class=" field">
+        <p class="control has-icons-left has-icons-right">
+            <input class="input" type="text" placeholder="Name" name="name">
+            <span class="icon is-small is-left">
+                <i class="fas fa-info-circle"></i>
+            </span>
+        </p>
+    </div>
+    <div class=" field">
+        <p class="control has-icons-left has-icons-right">
+            <input class="input" type="text" placeholder="Username" name="username">
+            <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+            </span>
+        </p>
+    </div>
+    <div class="field">
+        <p class="control has-icons-left">
+            <input class="input" type="password" placeholder="Password" name="password">
+            <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+            </span>
+        </p>
+    </div>
+    <div class="field">
+        <p class="control has-icons-left">
+            <input class="input" type="Password" placeholder="Comfirmed Password" name="confirmedPassword">
+            <span class="icon is-small is-left">
+                <i class="fas fa-exclamation-triangle"></i>
+            </span>
+        </p>
+    </div>
+    <div class="field">
+        <p class="control has-icons-left">
+            <input class="input" type="text" placeholder="Address" name="address">
+            <span class="icon is-small is-left">
+                <i class="fas fa-home"></i>
+            </span>
+        </p>
+    </div>
+    <div class="field has-addons">
+        <p class="control has-icons-left">
+            <input class="input" type="text" placeholder="Email" name="email">
+            <span class="icon is-small is-left">
+                <i class="fas fa-envelope-open-text"></i>
+            </span>
+        </p>
+        <p class="control">
+            <a class="button is-static">
+                @gmail.com
+            </a>
+        </p>
+    </div>
+    <div class="field">
+        <p class="control">
+            <button class="button is-info is-fullwidth">
+                SignUp
+            </button>
+        </p>
+    </div>
+</form>
+
+<script>
+    async function submitForm(formElem) {
+
+        var response = await fetch(formElem.action, {
+            method: formElem.method,
+            body: new FormData(formElem),  // "username=admin&password=123456"
+        });
+
+        if (response.status == 300) {
+            var user = await response.json();
+            location.replace("http://localhost:1337/user/login");
+        } else if (response.status == 401) {
+            var msg = await response.json();
+            alert(msg);
+        } else {
+            alert(response.statusText);
+        }
+    };
+</script>

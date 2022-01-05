@@ -1,0 +1,25 @@
+<form action="/user/wallet/<%= user.id %>" method="POST">
+
+    <div class="columns">
+        <div class="column">
+            <div class="field">
+                <h3 style="font-size:4vw"><b>Account Information</b></h3>
+                <div>
+                    <b>Card Type:</b>
+                    <%= user.cardType %>
+                </div>
+                <div>
+                    <b>Card Number:</b>
+                    <%= user.cardNum %>
+                </div>
+                <div>
+                    <b>Value:</b>
+                    <%= user.value %>
+                </div>
+                <div class="control">
+                    <button class="button is-link" type="submit" onclick="submit()">Add Value</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

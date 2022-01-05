@@ -1,0 +1,210 @@
+<!-- <!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .sidenav {
+            width: 130px;
+            position: fixed;
+            z-index: 1;
+            top: 50px;
+            left: 10px;
+            overflow-x: hidden;
+            padding: 8px 0;
+        }
+
+        .sidenav a {
+            padding: 6px 8px 6px 16px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #2196F3;
+            display: block;
+        }
+
+        .sidenav a:hover {
+            color: #064579;
+        }
+
+        .main {
+            margin-left: 140px;
+            /* Same width as the sidebar + left position in px */
+            font-size: 28px;
+            /* Increased text to enable scrolling */
+            padding: 0px 10px;
+        }
+
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidenav">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#clients">Clients</a>
+        <a href="#contact">Contact</a>
+    </div> -->
+
+    <div class="columns">
+        <div class="column">
+            <h3 style="text-align:center; font-size:30px">
+                ztore
+            </h3>
+            <% thatCategory.forEach ( function(product) { %>
+                <% if(product.shop=="ztore" ) { %>
+                    <div class="card text-center">
+                        <div class="card-image">
+                            <figure class="image">
+                                <a href="http://localhost:1337/priceTracker/category/drinks/<%= product.id %>">
+                                    <img src="<%= product.imgUrl %>" alt="">
+                                </a>
+                            </figure>
+                        </div>
+                        <h5 class="title">
+                            <a href="http://localhost:1337/priceTracker/category/drinks/<%= product.id %>">
+                                <p style="font-size:20px">
+                                    <%= product.title %>
+                                </p>
+                            </a>
+                        </h5>
+                    </div>
+                    <% } %>
+                        <br>
+                        <!-- <div class="card text-center">
+                <div class="card-image">
+                    <figure class="image">
+                        <a href="http://localhost:1337/priceTracker/category/drinks/<%= product.id %>">
+                            <img src="" alt="">
+                        </a>
+                    </figure>
+                </div>
+                <h3 class="title">
+                    <a href="http://localhost:1337/priceTracker/category/drinks/<%= product.id %>">
+                        <%= product.title %>
+                    </a>
+                </h3>
+            </div>
+            <br> -->
+                        <% }); %>
+        </div>
+
+
+        <div class="column">
+            <h3 style="text-align:center; font-size:30px">
+                CitySuper
+            </h3>
+            <% thatCategory.forEach ( function(product) { %>
+                <% if(product.shop=="citySuper" ) { %>
+                    <div class="card text-center">
+                        <div class="card-image">
+                            <figure class="image">
+                                <a href="http://localhost:1337/priceTracker/category/drinks/<%= product.id %>">
+                                    <img src="<%= product.imgUrl %>" alt="">
+                                </a>
+                            </figure>
+                        </div>
+                        <h5 class="title">
+                            <a href="http://localhost:1337/priceTracker/category/drinks/<%= product.id %>">
+                                <p style="font-size:20px">
+                                    <%= product.title %>
+                                </p>
+                            </a>
+                        </h5>
+                    </div>
+                    <br>
+                    <% } %>
+                        <% }); %>
+
+        </div>
+
+        <!-- <div class="column"> -->
+        <!-- <div class="card text-center">
+            <div class="card-image">
+                <figure class="image">
+                    <a href="http://localhost:1337/priceTracker/category/snacks">
+                        <img src="" alt="">
+                    </a>
+                </figure>
+            </div>
+            <h3 class="title">
+                <a href="http://localhost:1337/priceTracker/category/snacks">
+                    <%= thatCategory[2].title %>
+                </a>
+            </h3>
+        </div>
+        <br> -->
+        <!-- <div class="card text-center">
+            <div class="card-image">
+                <figure class="image">
+                    <a href="http://localhost:1337/priceTracker/category/care">
+                        <img src="/images/care.png" alt="Placeholder image">
+                    </a>
+                </figure>
+            </div>
+            <h3 class="title">
+                <a href="http://localhost:1337/priceTracker/category/care">Personal Care</a>
+            </h3>
+        </div> -->
+        <!-- </div> -->
+    </div>
+
+    <!-- <script>
+    async function scrapeProduct(url) {
+        const puppeteer = require('puppeteer');
+
+        console.log("entered")
+        const browser = await puppeteer.launch();
+        const page = await browser.newPage();
+        await page.goto(url);
+
+        const [el] = await page.$x('//*[@id="detail"]/div[1]/div[1]/div[1]/div[1]/div');
+        const src = await el.getProperty('src');
+        const imgURL = await src.jsonValue();
+
+        const [el2] = await page.$x('//*[@id="detail"]/div[1]/div[2]/div[2]/div[1]/h2');
+        const txt = await el2.getProperty('textContent');
+        const title = await txt.jsonValue();
+
+        const [el3] = await page.$x('//*[@id="detail"]/div[1]/div[2]/div[4]/div/span[1]')
+        const txt2 = await el3.getProperty('textContent');
+        const price = await txt2.jsonValue();
+
+        const [el4] = await page.$x('//*[@id="BaseLayout"]/div/div[4]/span[1]/div[1]/div/div/div/div/input')
+        const txt3 = await el4.getProperty('textContent');
+        const category = await txt3.jsonValue();
+
+        console.log({ imgURL, title, price, category });
+
+        browser.close();
+
+        return title
+    }
+</script>
+
+<script>
+    const puppeteer = require('puppeteer');
+
+    async function myfunction(url) {
+
+
+        const browser = await puppeteer.launch();
+
+        alert("entered");
+
+
+        const page = await browser.newPage();
+        await page.goto(url);
+
+
+    }  
+</script> -->

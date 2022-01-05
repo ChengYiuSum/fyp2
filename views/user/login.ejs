@@ -1,0 +1,62 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<form action="/user/login" method="POST" onsubmit="submitForm(this);return false">
+  <div class="field">
+    <h1 style="font-size:5vw; color:rgb(34, 152, 230)"">Login</h1>
+  </div>
+  <div class=" field">
+      <p class="control has-icons-left has-icons-right">
+        <input class="input" type="text" placeholder="Username" name="username">
+        <span class="icon is-small is-left">
+          <i class="fas fa-user"></i>
+        </span>
+      </p>
+  </div>
+  <div class="field">
+    <p class="control has-icons-left">
+      <input class="input" type="password" placeholder="Password" name="password">
+      <span class="icon is-small is-left">
+        <i class="fas fa-lock"></i>
+      </span>
+    </p>
+  </div>
+  <div class="field">
+    <p class="control">
+      <button class="button is-fullwidth is-info">
+        Login
+      </button>
+    </p>
+  </div>
+  <!-- <div class="col">
+    <a href="#" class="fb btn">
+      <i class="fa fa-facebook fa-fw"></i> Login with Facebook
+    </a>
+    <a href="#" class="twitter btn">
+      <i class="fa fa-twitter fa-fw"></i> Login with Twitter
+    </a>
+    <a href="#" class="google btn">
+      <i class="fa fa-google fa-fw"></i> Login with Google
+    </a>
+  </div> -->
+</form>
+
+<script>
+  async function submitForm(formElem) {
+
+    var response = await fetch(formElem.action, {
+      method: formElem.method,
+      body: new FormData(formElem),  // "username=admin&password=123456"
+    });
+
+    if (response.ok) {
+      var user = await response.json();
+      alert("Welcome back, " + user.username);
+      location.replace("http://localhost:1337/priceTracker/homepage");
+    } else if (response.status == 401) {
+      var msg = await response.json();
+      alert(msg);
+    } else {
+      alert(response.statusText);
+    }
+  };
+</script>
