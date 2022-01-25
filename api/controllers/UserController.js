@@ -108,6 +108,29 @@ module.exports = {
 
             return res.view('user/wallet', { user: thatUser });
         }
+    },
+
+    value: async function (req, res) {
+        var thatUser = await User.findOne(req.session.userid);
+
+        if (!thatUser) return res.status(404).json("User not found.");
+
+        if (req.method == "GET") {
+
+            return res.view('user/value', { user: thatUser });
+        }
+
+        else {
+            console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~enter update~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+
+            await User.updateOne(req.session.userid).set({ value: thatUser.value + req.body.value });
+
+            console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~success updated~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+
+            return res.redirect('/');
+
+        }
     }
 };
 
+// action need equal to route

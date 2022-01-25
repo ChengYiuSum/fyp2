@@ -47,6 +47,8 @@ module.exports.routes = {
   'GET /user/json': 'UserController.json',
   'GET /user/account/:id': 'UserController.account',
   'GET /user/wallet/:id': 'UserController.wallet',
+  'GET /user/wallet/:id/value': 'UserController.value',
+  'POST /user/wallet/:id/value': 'UserController.value',
 
 
 };
