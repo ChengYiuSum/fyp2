@@ -121,15 +121,44 @@ module.exports = {
         }
 
         else {
-            console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~enter update~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
-            await User.updateOne(req.session.userid).set({ value: thatUser.value + req.body.value });
+            await User.updateOne(req.session.userid).set({ value: thatUser.value + parseInt(req.body.value) });
 
-            console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~success updated~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-
-            return res.redirect('/');
+            return res.redirect('/user/wallet/' + req.session.userid);
 
         }
+    },
+
+    // return json of relationship
+    populate: async function (req, res) {
+
+        var user = await User.findOne(req.session.userid).populate("products");
+
+        if (!user) return res.notFound();
+
+        return res.json(user);
+    },
+
+    purchase: async function (req, res) {
+
+        var user = await User.findOne(req.session.userid).populate("products");
+
+        if (!user) return res.notFound();
+
+        var count = 0;
+
+        if (req.wantsJSON) {
+            return res.json(user.products);
+        } else {
+            return res.view('user/purchase', { products: user.products, user: user });
+        }
+    },
+
+
+    add: async function (req, res) {
+        var thatUser = await User.findOne(req.session.userid);
+
+        if (!thatUser) return res.status(404).json("User not found.");
     }
 };
 

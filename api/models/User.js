@@ -55,8 +55,7 @@ module.exports = {
 
     value: {
       type: 'number',
-      defaultsTo: 0.0
-    }
+    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
@@ -67,6 +66,10 @@ module.exports = {
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
+    products: {
+      collection: 'PriceTracker',
+      via: 'purchase'
+    }
   },
 
   customToJSON: function () {

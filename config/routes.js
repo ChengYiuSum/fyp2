@@ -38,6 +38,8 @@ module.exports.routes = {
   'GET /priceTracker/homepage': 'PriceTrackerController.homepage',
   'GET /priceTracker/category/:category': 'PriceTrackerController.category',
   'GET /priceTracker/category/:category/:id': 'PriceTrackerController.product',
+  'GET /priceTracker/cart/:id': 'PriceTrackerController.cart',
+
 
   'GET /user/signUp': 'UserController.signUp',
   'POST /user/signUp': 'UserController.signUp',

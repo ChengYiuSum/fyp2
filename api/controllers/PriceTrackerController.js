@@ -313,36 +313,24 @@ module.exports = {
 
         return res.view('priceTracker/product', { product: thatProduct })
     },
+
+    cart: async function (req, res) {
+
+        if (req.method == "GET") return res.view('priceTracker/cart');
+
+        // var milestone = await Milestone.create(req.body).fetch();
+
+        // return res.redirect('/');	    // for ajax request
+    },
+
+    // see who have the relationship with the product
+    populate: async function (req, res) {
+
+        var product = await PriceTracker.findOne(req.params.id).populate("purchase");
+
+        if (!milestone) return res.notFound();
+
+        return res.view('priceTracker/customer', { product: product });
+
+    },
 }
-
-
-
-
-        // console.log('testing')
-
-        // const cheerio = require('cheerio')
-        // const request = require('request')
-
-        // let price = null;
-        // function scrapeprice() {
-        //     console.log('testing2')
-        //     request('http://www.marketwatch.com/investing/stock/aapl', (error, Response, html) => {
-        //         if (!error && Response.status == 200) {
-        //             console.log('testing3')
-        //             const $ = cheerio.load(html)
-        //             price = $('.intraday__price ').children('bg-quote').text()
-        //             console.log(price)
-        //         }
-        //     })
-        // }
-        // scrapeprice()
-
-
-        //var headings = document.evaluate("/html/body//h2", document, null, XPathResult.ANY_TYPE, null)
-        //var thisHeading = headings.iterateNext();
-        //var alertText = "Level 2 headings in this document are:\n";
-        //while (thisHeading) {
-        //  alertText += thisHeading.textContent + "\n";
-        //    thisHeading = headings.iterateNext();
-        //}
-        //alert(alertText);
