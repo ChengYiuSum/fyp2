@@ -20,5 +20,49 @@
                 <%= product.shop %>
             </li>
         </div>
+
+        <div class="field is-grouped">
+            <p class="control">
+                <button class="button is-link">
+                    <span class="icon is-small">
+                        <i class="far fa-list-alt"></i>
+                    </span>
+                    <span>Define Preference</span>
+                </button>
+            </p>
+            <p class="control">
+                <button class="button is-info" onclick="purchase('<%= product.id %>')">
+                    <span class="icon is-small">
+                        <i class="fas fa-shopping-cart"></i>
+                    </span>
+                    <span>Add to cart</span>
+                </button>
+            </p>
+        </div>
     </div>
 </div>
+
+<script>
+    async function purchase(fk) {
+        var r = confirm("Add to cart?");
+
+        if (r) {
+            var response = await fetch("/user/products/add/" + fk, {
+                method: "POST"
+            });
+
+            if (response.ok) {
+                alert("Add to cart success");
+                location.assign("/");
+            } else if (response.status == 409) {
+                var e = await response.json();
+                alert(e);
+            } else if (response.status == 404) {
+                var e = await response.json();
+                alert(e);
+            }
+        } else {
+            alert(response.statusText);
+        }
+    };
+</script>

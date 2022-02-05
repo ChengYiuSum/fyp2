@@ -52,5 +52,9 @@ module.exports.routes = {
   'GET /user/wallet/:id/value': 'UserController.value',
   'POST /user/wallet/:id/value': 'UserController.value',
 
+  'GET /priceTracker/:id/purchase': 'UserController.populate',
+  'GET /user/purchase': 'UserController.purchase',
+  'POST /user/products/add/:fk': 'UserController.add',
+
 
 };

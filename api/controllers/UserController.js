@@ -159,6 +159,14 @@ module.exports = {
         var thatUser = await User.findOne(req.session.userid);
 
         if (!thatUser) return res.status(404).json("User not found.");
+
+        var thatProduct = await PriceTracker.findOne(req.params.fk).populate("purchase", { id: req.session.userid });
+
+        if (!thatProduct) return res.status(404).json("Product not found.");
+
+        await User.addToCollection(req.session.userid, "products").members(req.params.fk);
+
+        return res.ok();
     }
 };
 
