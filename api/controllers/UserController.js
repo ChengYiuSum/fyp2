@@ -167,7 +167,23 @@ module.exports = {
         await User.addToCollection(req.session.userid, "products").members(req.params.fk);
 
         return res.ok();
-    }
+    },
+
+    remove: async function (req, res) {
+
+        if (!await User.findOne(req.params.id)) return res.status(404).json("User not found.");
+
+        var thatProduct = await PriceTracker.findOne(req.params.fk).populate("purchase", { id: req.params.id });
+
+        if (!thatProduct) return res.status(404).json("Product not found.");
+
+        if (thatProduct.purchase.length == 0)
+            return res.status(409).json("Nothing to delete.");    // conflict
+
+        await User.removeFromCollection(req.params.id, "products").members(req.params.fk);
+
+        return res.ok();
+    },
 };
 
 // action need equal to route

@@ -333,4 +333,17 @@ module.exports = {
         return res.view('priceTracker/customer', { product: product });
 
     },
+
+    delete: async function (req, res) {
+
+        var deletedProduct = await PriceTracker.destroyOne(req.params.id);
+
+        if (!deletedProduct) return res.notFound();
+
+        if (req.wantsJSON) {
+            return res.status(204).send();	    // for ajax request
+        } else {
+            return res.redirect('/');			// for normal request
+        }
+    },
 }

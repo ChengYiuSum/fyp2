@@ -40,6 +40,7 @@ module.exports.routes = {
   'GET /priceTracker/category/:category/:id': 'PriceTrackerController.product',
   'GET /priceTracker/cart/:id': 'PriceTrackerController.cart',
 
+  'DELETE /priceTracker/:id': 'PriceTrackerController.delete',
 
   'GET /user/signUp': 'UserController.signUp',
   'POST /user/signUp': 'UserController.signUp',
@@ -52,9 +53,12 @@ module.exports.routes = {
   'GET /user/wallet/:id/value': 'UserController.value',
   'POST /user/wallet/:id/value': 'UserController.value',
 
-  'GET /priceTracker/:id/purchase': 'UserController.populate',
+  'GET /priceTracker/:id/purchase': 'PriceTrackerController.populate',
+  'GET /user/products/json': 'UserController.populate',
   'GET /user/purchase': 'UserController.purchase',
   'POST /user/products/add/:fk': 'UserController.add',
+  'POST /user/products/remove/:fk': 'UserController.remove',
+
 
 
 };

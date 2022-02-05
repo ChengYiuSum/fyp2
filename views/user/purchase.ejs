@@ -1,0 +1,66 @@
+<div class="column">
+    <div class="field">
+        <h3 style="font-size:4vw"><b>Shopping Cart</b></h3>
+    </div>
+    <% products.forEach ( function(product) { %>
+        <div class="box">
+            <article class="media">
+                <div class="media-left">
+                    <figure class="image is-64x64">
+                        <a href="http://localhost:1337/priceTracker/category/drinks/<%= product.id %>">
+                            <img src="<%= product.imgUrl %>" alt="">
+                        </a>
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <div class="content">
+                        <h3 class="title">
+                            <a href="http://localhost:1337/priceTracker/category/drinks">
+                                <%= product.title %>
+                            </a>
+                        </h3>
+                        <p>
+                            <b>Price:</b>
+                            <%= product.price %>
+                        </p>
+                        <p>
+                            <b>Shop:</b>
+                            <%= product.shop %>
+                        </p>
+                    </div>
+                    <div class="level-right">
+                        <a class="level-item" aria-label="reply">
+                            <span class="icon is-small">
+                                <button class="fas fa-trash-alt" type="button" aria-hidden="true"
+                                    onclick="deleteProduct('<%= product.id %>')"></button>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+        </div>
+        <br>
+        <% }); %>
+</div>
+
+<script>
+    async function deleteProduct(id) {
+        var r = confirm("Confirm Delete?", id);
+
+        if (r) {
+            var response = await fetch("/user/" + id, {
+                method: "DELETE",
+            });
+
+            if (response.ok) {
+                alert("Product deleted.");
+                location.assign("/");
+            } else {
+                alert(response.status + ": " + response.statusText);
+            }
+
+        } else {
+            alert("cancelled");
+        }
+    };
+</script>
