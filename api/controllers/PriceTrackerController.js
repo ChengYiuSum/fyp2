@@ -314,15 +314,6 @@ module.exports = {
         return res.view('priceTracker/product', { product: thatProduct })
     },
 
-    cart: async function (req, res) {
-
-        if (req.method == "GET") return res.view('priceTracker/cart');
-
-        // var milestone = await Milestone.create(req.body).fetch();
-
-        // return res.redirect('/');	    // for ajax request
-    },
-
     // see who have the relationship with the product
     populate: async function (req, res) {
 
@@ -334,6 +325,7 @@ module.exports = {
 
     },
 
+    //delete the product from database
     delete: async function (req, res) {
 
         var deletedProduct = await PriceTracker.destroyOne(req.params.id);

@@ -56,6 +56,8 @@ module.exports.routes = {
   'GET /priceTracker/:id/purchase': 'PriceTrackerController.populate',
   'GET /user/products/json': 'UserController.populate',
   'GET /user/purchase': 'UserController.purchase',
+  // 'POST /user/purchse': 'UserController.purchase',
+  'POST /user/record': 'UserController.purchase',
   'POST /user/products/add/:fk': 'UserController.add',
   'POST /user/products/remove/:fk': 'UserController.remove',
 

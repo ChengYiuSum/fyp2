@@ -53,7 +53,7 @@
 
             if (response.ok) {
                 alert("Add to cart success");
-                location.assign("/");
+                location.assign("/priceTracker/homepage");
             } else if (response.status == 409) {
                 var e = await response.json();
                 alert(e);

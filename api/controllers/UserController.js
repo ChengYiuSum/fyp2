@@ -147,11 +147,18 @@ module.exports = {
 
         var count = 0;
 
-        if (req.wantsJSON) {
-            return res.json(user.products);
-        } else {
-            return res.view('user/purchase', { products: user.products, user: user });
-        }
+        // if (req.wantsJSON) {
+        //     return res.json(user.products);
+        // } else {
+        //     return res.view('user/purchase', { products: user.products, user: user });
+        // }
+        if (req.method == "GET") return res.view('user/purchase', { products: user.products, user: user });
+
+        var record = await User.create(req.body).fetch();
+
+        console.log(record.title.length)
+
+        return res.view('user/record', { record: record });
     },
 
 
@@ -170,17 +177,18 @@ module.exports = {
     },
 
     remove: async function (req, res) {
+        var thatUser = await User.findOne(req.session.userid);
 
-        if (!await User.findOne(req.params.id)) return res.status(404).json("User not found.");
+        if (!thatUser) return res.status(404).json("User not found.");
 
-        var thatProduct = await PriceTracker.findOne(req.params.fk).populate("purchase", { id: req.params.id });
+        var thatProduct = await PriceTracker.findOne(req.params.fk).populate("purchase", { id: req.session.userid });
 
         if (!thatProduct) return res.status(404).json("Product not found.");
 
         if (thatProduct.purchase.length == 0)
             return res.status(409).json("Nothing to delete.");    // conflict
 
-        await User.removeFromCollection(req.params.id, "products").members(req.params.fk);
+        await User.removeFromCollection(req.session.userid, "products").members(req.params.fk);
 
         return res.ok();
     },
