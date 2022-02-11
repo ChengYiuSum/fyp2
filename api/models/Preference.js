@@ -1,5 +1,5 @@
 /**
- * PriceTracker.js
+ * Preference.js
  *
  * @description :: A model definition represents a database table/collection.
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
@@ -12,22 +12,19 @@ module.exports = {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
-
     title: {
-      type: "string",
-      // unique: true,
-      // required: true
-    },
-
-    price: {
       type: "string"
     },
 
-    imgUrl: {
-      type: "string"
+    prePrice: {
+      type: "number"
     },
 
-    shop: {
+    preQuantity: {
+      type: "number"
+    },
+
+    expiryDate: {
       type: "string"
     },
 
@@ -40,14 +37,12 @@ module.exports = {
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
-    purchase: {
-      collection: 'User',
-      via: 'products'
+    define: {
+      model: 'user'
     },
 
-    preferences: {
-      collection: 'preference',
-      via: 'own'
+    own: {
+      model: 'priceTracker'
     }
 
   },

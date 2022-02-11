@@ -311,7 +311,18 @@ module.exports = {
 
         if (!thatProduct) return res.notFound();
 
-        return res.view('priceTracker/product', { product: thatProduct })
+        if (req.method == "GET") {
+
+            return res.view('priceTracker/product', { product: thatProduct })
+
+        } else {
+
+            var preference = await Preference.create(req.body).fetch();
+
+            console.log(preference)
+
+            return res.view('priceTracker/product', { product: thatProduct })
+        }
     },
 
     // see who have the relationship with the product
@@ -323,6 +334,15 @@ module.exports = {
 
         return res.view('priceTracker/customer', { product: product });
 
+    },
+
+    populate_preference: async function (req, res) {
+
+        var product = await PriceTracker.findOne(req.params.id).populate("preferences");
+
+        if (!product) return res.notFound();
+
+        return res.json(product);
     },
 
     //delete the product from database

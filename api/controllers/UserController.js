@@ -130,9 +130,18 @@ module.exports = {
     },
 
     // return json of relationship
-    populate: async function (req, res) {
+    populate_products: async function (req, res) {
 
         var user = await User.findOne(req.session.userid).populate("products");
+
+        if (!user) return res.notFound();
+
+        return res.json(user);
+    },
+
+    populate_preference: async function (req, res) {
+
+        var user = await User.findOne(req.session.userid).populate("preferences");
 
         if (!user) return res.notFound();
 
@@ -156,9 +165,19 @@ module.exports = {
 
         var record = await User.create(req.body).fetch();
 
-        console.log(record.title.length)
+        var count = 0
+        var list = 1
+        var total = 0.0
+        var price = 0.0
 
-        return res.view('user/record', { record: record });
+        console.log(record)
+
+        for (var i = 0; i < record.price.length; i++) {
+            price = record.price[i].substring(1);
+            total += parseFloat(price)
+        }
+
+        return res.view('user/record', { record: record, count: count, list: list, total: total });
     },
 
 
@@ -192,6 +211,10 @@ module.exports = {
 
         return res.ok();
     },
+
+    payment: async function (req, res) {
+        return res.view('user/payment');
+    }
 };
 
 // action need equal to route

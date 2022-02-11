@@ -69,6 +69,11 @@ module.exports = {
     products: {
       collection: 'PriceTracker',
       via: 'purchase'
+    },
+
+    preferences: {
+      collection: 'preference',
+      via: 'define'
     }
   },
 

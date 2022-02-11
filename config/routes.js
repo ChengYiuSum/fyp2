@@ -38,6 +38,7 @@ module.exports.routes = {
   'GET /priceTracker/homepage': 'PriceTrackerController.homepage',
   'GET /priceTracker/category/:category': 'PriceTrackerController.category',
   'GET /priceTracker/category/:category/:id': 'PriceTrackerController.product',
+  'POST /priceTracker/category/:category/:id': 'PriceTrackerController.product',
   'GET /priceTracker/cart/:id': 'PriceTrackerController.cart',
 
   'DELETE /priceTracker/:id': 'PriceTrackerController.delete',
@@ -54,10 +55,14 @@ module.exports.routes = {
   'POST /user/wallet/:id/value': 'UserController.value',
 
   'GET /priceTracker/:id/purchase': 'PriceTrackerController.populate',
-  'GET /user/products/json': 'UserController.populate',
+  'GET /priceTracker/:id/preference/json': 'PriceTrackerController.populate_preference',
+  'GET /user/products/json': 'UserController.populate_products',
+  'GET /user/preference/json': 'UserController.populate_preference',
   'GET /user/purchase': 'UserController.purchase',
   // 'POST /user/purchse': 'UserController.purchase',
   'POST /user/record': 'UserController.purchase',
+  'GET /user/payment': 'UserController.payment',
+  'POST /user/payment': 'UserController.payment',
   'POST /user/products/add/:fk': 'UserController.add',
   'POST /user/products/remove/:fk': 'UserController.remove',
 
