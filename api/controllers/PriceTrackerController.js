@@ -330,7 +330,7 @@ module.exports = {
 
         var product = await PriceTracker.findOne(req.params.id).populate("purchase");
 
-        if (!milestone) return res.notFound();
+        if (!product) return res.notFound();
 
         return res.view('priceTracker/customer', { product: product });
 
@@ -357,5 +357,23 @@ module.exports = {
         } else {
             return res.redirect('/');			// for normal request
         }
+    },
+
+    search: async function (req, res) {
+
+        var whereClause = {};
+
+        if (req.query.title) whereClause.title = { contains: req.query.title };
+
+        var thoseProducts = await PriceTracker.find({
+            where: whereClause,
+            sort: 'id'
+        });
+
+        var count = 0;
+
+        console.log(thoseProducts)
+
+        return res.view('priceTracker/search', { products: thoseProducts, count: count });
     },
 }

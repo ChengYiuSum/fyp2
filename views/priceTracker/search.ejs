@@ -1,0 +1,96 @@
+<% if(products.length>= 3) { %>
+    <% products.forEach( function(product) { %>
+        <% if (count % 3==0) { %>
+            <div class="columns">
+                <% } %>
+                    <div class="column is-one-third">
+                        <div class="card">
+                            <div class="card text-center">
+                                <div class="card-image">
+                                    <figure class="image">
+                                        <a href="http://localhost:1337/priceTracker/category/drinks/<%= product.id %>">
+                                            <img src="<%= product.imgUrl %>" alt="">
+                                        </a>
+                                    </figure>
+                                </div>
+                                <h5 class="title">
+                                    <a href="http://localhost:1337/priceTracker/category/drinks/<%= product.id %>">
+                                        <p style="font-size:20px">
+                                            <%= product.title %>
+                                        </p>
+                                    </a>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                    <% count++; %>
+                        <% if (count % 3==0 && count> 0) { %>
+            </div>
+            <% } %>
+                <% }); %>
+
+                    <% } else if (products.length==2) {%>
+                        <div class="columns">
+                            <% products.forEach( function(product) { %>
+                                <div class="column is-one-third">
+                                    <div class="card">
+                                        <div class="card text-center">
+                                            <div class="card-image">
+                                                <figure class="image">
+                                                    <a
+                                                        href="http://localhost:1337/priceTracker/category/drinks/<%= product.id %>">
+                                                        <img src="<%= product.imgUrl %>" alt="">
+                                                    </a>
+                                                </figure>
+                                            </div>
+                                            <h5 class="title">
+                                                <a
+                                                    href="http://localhost:1337/priceTracker/category/drinks/<%= product.id %>">
+                                                    <p style="font-size:20px">
+                                                        <%= product.title %>
+                                                    </p>
+                                                </a>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% if (count==1) { %>
+                                    <div class="column">
+                                    </div>
+                                    <% } %>
+                                        <% count++; %>
+                                            <% }); %>
+                        </div>
+
+                        <% } else if (products.length==1) {%>
+                            <div class="columns">
+                                <% products.forEach( function(product) { %>
+                                    <div class="column is-one-third">
+                                        <div class="card">
+                                            <div class="card text-center">
+                                                <div class="card-image">
+                                                    <figure class="image">
+                                                        <a
+                                                            href="http://localhost:1337/priceTracker/category/drinks/<%= product.id %>">
+                                                            <img src="<%= product.imgUrl %>" alt="">
+                                                        </a>
+                                                    </figure>
+                                                </div>
+                                                <h5 class="title">
+                                                    <a
+                                                        href="http://localhost:1337/priceTracker/category/drinks/<%= product.id %>">
+                                                        <p style="font-size:20px">
+                                                            <%= product.title %>
+                                                        </p>
+                                                    </a>
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column">
+                                    </div>
+                                    <div class="column">
+                                    </div>
+                                    <% }); %>
+                            </div>
+                            <% } %>

@@ -9,110 +9,109 @@
     </style>
 </head>
 
+
 <body>
-
-    <body>
-        <form action="human/search">
-            <div class="field has-addons">
-                <div class="control has-icons-left">
-                    <input class="input" type="text" placeholder="Search" name="criteria">
-                    <span class="icon is-small is-left">
-                        <i class="fas fa-search"></i>
-                    </span>
-                </div>
-                <div class="control">
-                    <a class="button is-info">
-                        Search
-                    </a>
-                </div>
+    <form action="/priceTracker/search" method="get">
+        <div class="field has-addons">
+            <div class="control has-icons-left">
+                <input class="input" type="text" placeholder="Search" name="title" id="title">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-search"></i>
+                </span>
             </div>
-        </form>
-
-        <br>
-
-        <div class="columns">
-            <div class="column">
-                <div class="card text-center">
-                    <div class="card-image">
-                        <figure class="image">
-                            <a href="http://localhost:1337/priceTracker/category/fruit">
-                                <img src="/images/fruits.jpg" alt="">
-                            </a>
-                        </figure>
-                    </div>
-                    <h3 class="title">
-                        <a href="http://localhost:1337/priceTracker/category/fruit">Fruit</a>
-                    </h3>
-                </div>
-                <br>
-                <div class="card text-center">
-                    <div class="card-image">
-                        <figure class="image">
-                            <a href="http://localhost:1337/priceTracker/category/noodle">
-                                <img src="/images/noodles.jpg" alt="">
-                            </a>
-                        </figure>
-                    </div>
-                    <h3 class="title">
-                        <a href="http://localhost:1337/priceTracker/category/noodle">Noodle</a>
-                    </h3>
-                </div>
-            </div>
-
-            <div class="column">
-                <div class="card text-center">
-                    <div class="card-image">
-                        <figure class="image">
-                            <a href="http://localhost:1337/priceTracker/category/drinks">
-                                <img src="/images/drinks.jpg" alt="">
-                            </a>
-                        </figure>
-                    </div>
-                    <h3 class="title">
-                        <a href="http://localhost:1337/priceTracker/category/drinks">Drinks</a>
-                    </h3>
-                </div>
-                <br>
-                <div class="card text-center">
-                    <div class="card-image">
-                        <figure class="image">
-                            <a href="http://localhost:1337/priceTracker/category/necessity">
-                                <img src="/images/necessity.jpeg" alt="">
-                            </a>
-                        </figure>
-                    </div>
-                    <h3 class="title">
-                        <a href="http://localhost:1337/priceTracker/category/necessity">Necessity</a>
-                    </h3>
-                </div>
-            </div>
-
-            <div class="column">
-                <div class="card text-center">
-                    <div class="card-image">
-                        <figure class="image">
-                            <a href="http://localhost:1337/priceTracker/category/snacks">
-                                <img src="/images/snacks.jpg" alt="">
-                            </a>
-                        </figure>
-                    </div>
-                    <h3 class="title">
-                        <a href="http://localhost:1337/priceTracker/category/snacks">Snacks</a>
-                    </h3>
-                </div>
-                <br>
-                <div class="card text-center">
-                    <div class="card-image">
-                        <figure class="image">
-                            <a href="http://localhost:1337/priceTracker/category/care">
-                                <img src="/images/care.jpg" alt="">
-                            </a>
-                        </figure>
-                    </div>
-                    <h3 class="title">
-                        <a href="http://localhost:1337/priceTracker/category/care">Personal Care</a>
-                    </h3>
-                </div>
+            <div class="control">
+                <button class="button is-info" type="submit">
+                    Search
+                </button>
             </div>
         </div>
-    </body>
+    </form>
+
+    <br>
+
+    <div class="columns">
+        <div class="column">
+            <div class="card text-center">
+                <div class="card-image">
+                    <figure class="image">
+                        <a href="http://localhost:1337/priceTracker/category/fruit">
+                            <img src="/images/fruits.jpg" alt="">
+                        </a>
+                    </figure>
+                </div>
+                <h3 class="title">
+                    <a href="http://localhost:1337/priceTracker/category/fruit">Fruit</a>
+                </h3>
+            </div>
+            <br>
+            <div class="card text-center">
+                <div class="card-image">
+                    <figure class="image">
+                        <a href="http://localhost:1337/priceTracker/category/noodle">
+                            <img src="/images/noodles.jpg" alt="">
+                        </a>
+                    </figure>
+                </div>
+                <h3 class="title">
+                    <a href="http://localhost:1337/priceTracker/category/noodle">Noodle</a>
+                </h3>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="card text-center">
+                <div class="card-image">
+                    <figure class="image">
+                        <a href="http://localhost:1337/priceTracker/category/drinks">
+                            <img src="/images/drinks.jpg" alt="">
+                        </a>
+                    </figure>
+                </div>
+                <h3 class="title">
+                    <a href="http://localhost:1337/priceTracker/category/drinks">Drinks</a>
+                </h3>
+            </div>
+            <br>
+            <div class="card text-center">
+                <div class="card-image">
+                    <figure class="image">
+                        <a href="http://localhost:1337/priceTracker/category/necessity">
+                            <img src="/images/necessity.jpeg" alt="">
+                        </a>
+                    </figure>
+                </div>
+                <h3 class="title">
+                    <a href="http://localhost:1337/priceTracker/category/necessity">Necessity</a>
+                </h3>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="card text-center">
+                <div class="card-image">
+                    <figure class="image">
+                        <a href="http://localhost:1337/priceTracker/category/snacks">
+                            <img src="/images/snacks.jpg" alt="">
+                        </a>
+                    </figure>
+                </div>
+                <h3 class="title">
+                    <a href="http://localhost:1337/priceTracker/category/snacks">Snacks</a>
+                </h3>
+            </div>
+            <br>
+            <div class="card text-center">
+                <div class="card-image">
+                    <figure class="image">
+                        <a href="http://localhost:1337/priceTracker/category/care">
+                            <img src="/images/care.jpg" alt="">
+                        </a>
+                    </figure>
+                </div>
+                <h3 class="title">
+                    <a href="http://localhost:1337/priceTracker/category/care">Personal Care</a>
+                </h3>
+            </div>
+        </div>
+    </div>
+</body>

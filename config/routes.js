@@ -40,6 +40,7 @@ module.exports.routes = {
   'GET /priceTracker/category/:category/:id': 'PriceTrackerController.product',
   'POST /priceTracker/category/:category/:id': 'PriceTrackerController.product',
   'GET /priceTracker/cart/:id': 'PriceTrackerController.cart',
+  'GET /priceTracker/search': 'PriceTrackerController.search',
 
   'DELETE /priceTracker/:id': 'PriceTrackerController.delete',
 
