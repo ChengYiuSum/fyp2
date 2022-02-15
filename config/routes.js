@@ -50,6 +50,9 @@ module.exports.routes = {
   'POST /user/login': 'UserController.login',
   'POST /user/logout': 'UserController.logout',
   'GET /user/json': 'UserController.json',
+  'GET /user/setting': 'UserController.setting',
+  'POST /user/setting': 'UserController.setting',
+
   'GET /user/account/:id': 'UserController.account',
   'GET /user/wallet/:id': 'UserController.wallet',
   'GET /user/wallet/:id/value': 'UserController.value',
@@ -59,8 +62,10 @@ module.exports.routes = {
   'GET /priceTracker/:id/preference/json': 'PriceTrackerController.populate_preference',
   'GET /user/products/json': 'UserController.populate_products',
   'GET /user/preference/json': 'UserController.populate_preference',
+  'GET /user/record/json': 'UserController.populate_record',
+  'GET /user/payment/json': 'UserController.populate_payment',
+
   'GET /user/purchase': 'UserController.purchase',
-  // 'POST /user/purchse': 'UserController.purchase',
   'POST /user/record': 'UserController.purchase',
   'GET /user/payment': 'UserController.payment',
   'POST /user/payment': 'UserController.payment',
@@ -70,3 +75,6 @@ module.exports.routes = {
 
 
 };
+
+
+ // 'POST /user/purchse': 'UserController.purchase',

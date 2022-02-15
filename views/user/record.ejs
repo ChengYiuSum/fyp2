@@ -18,32 +18,60 @@
                     <th></th>
                     <th>Total:</th>
                     <th>
+                        <input class="input" type="hidden" name="total" value="<%= total %>">
                         $<%= total %>
                     </th>
                 </tr>
             </tfoot>
 
-            <% record.title.forEach( function(title) { %>
+            <% if (typeof record.title==='string' ) { %>
                 <tbody>
                     <tr>
                         <td>
                             <%= list %>.
                         </td>
                         <td>
-                            <%= title %>
+                            <input class="input" type="hidden" name="title" value="<%= record.title %>">
+                            <%= record.title %>
                         </td>
                         <td>
-                            <%= record.shop[count] %>
+                            <input class="input" type="hidden" name="shop" value="<%= record.shop %>">
+                            <%= record.shop %>
                         </td>
                         <td>
-                            <%= record.price[count] %>
+                            <input class="input" type="hidden" name="price" value="<%= record.price %>">
+                            <%= record.price %>
                         </td>
                     </tr>
                 </tbody>
-                <% count++; %>
-                    <% list++; %>
-                        <% }); %>
-
+                <% list++; %>
+                    <% } else { %>
+                        <% record.title.forEach( function(title) { %>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <%= list %>.
+                                    </td>
+                                    <td>
+                                        <input class="input" type="hidden" name="title" value="<%= title %>">
+                                        <%= title %>
+                                    </td>
+                                    <td>
+                                        <input class="input" type="hidden" name="shop"
+                                            value="<%= record.shop[count] %>">
+                                        <%= record.shop[count] %>
+                                    </td>
+                                    <td>
+                                        <input class="input" type="hidden" name="price"
+                                            value="<%= record.price[count] %>">
+                                        <%= record.price[count] %>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <% count++; %>
+                                <% list++; %>
+                                    <% }); %>
+                                        <% } %>
         </table>
     </div>
     <div class="field">

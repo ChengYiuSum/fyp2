@@ -23,7 +23,7 @@ module.exports = {
 
         //if (!match) return res.status(401).json("Wrong Password");
 
-        // Reuse existing session 
+        // Reuse existing session
         if (!req.session.username) {
             req.session.username = user.username;
             req.session.name = user.name;
@@ -32,6 +32,7 @@ module.exports = {
             req.session.role = user.role;
             req.session.userid = user.id;
             req.session.value = user.value;
+            req.session.cardType = user.cardType;
             return res.json(user);
             // return res.redirect('/');
         }
@@ -48,6 +49,7 @@ module.exports = {
             req.session.role = user.role;
             req.session.userid = user.id;
             req.session.value = user.value;
+            req.session.cardType = user.cardType;
             return res.json(user);
             // return res.redirect('/');
         });
@@ -86,6 +88,12 @@ module.exports = {
         var everyuser = await User.find();
 
         return res.json(everyuser);
+    },
+
+    setting: async function (req, res) {
+        if (req.method == "GET") return res.view('user/setting')
+
+        return res.redirect('/priceTracker/homepage');
     },
 
     account: async function (req, res) {
@@ -148,6 +156,24 @@ module.exports = {
         return res.json(user);
     },
 
+    populate_record: async function (req, res) {
+
+        var user = await User.findOne(req.session.userid).populate("record");
+
+        if (!user) return res.notFound();
+
+        return res.json(user);
+    },
+
+    populate_payment: async function (req, res) {
+
+        var user = await User.findOne(req.session.userid).populate("payment");
+
+        if (!user) return res.notFound();
+
+        return res.json(user);
+    },
+
     purchase: async function (req, res) {
 
         var user = await User.findOne(req.session.userid).populate("products");
@@ -163,19 +189,24 @@ module.exports = {
         // }
         if (req.method == "GET") return res.view('user/purchase', { products: user.products, user: user });
 
-        var record = await User.create(req.body).fetch();
+        var record = await Record.create(req.body).fetch();
 
         var count = 0
         var list = 1
         var total = 0.0
         var price = 0.0
 
-        console.log(record)
-
-        for (var i = 0; i < record.price.length; i++) {
-            price = record.price[i].substring(1);
-            total += parseFloat(price)
+        if (typeof record.price === 'string') {
+            price = record.price.substring(1);
+            total = parseFloat(price)
+        } else {
+            for (var i = 0; i < record.price.length; i++) {
+                price = record.price[i].substring(1);
+                total += parseFloat(price)
+            }
         }
+
+        console.log(record)
 
         return res.view('user/record', { record: record, count: count, list: list, total: total });
     },
@@ -213,7 +244,15 @@ module.exports = {
     },
 
     payment: async function (req, res) {
-        return res.view('user/payment');
+        var payment = await Payment.create(req.body).fetch();
+
+        if (req.method == "GET") return res.view('user/payment'), { payment: payment };
+
+        // var payment = await Payment.create(req.body).fetch();
+
+        return res.redirect('/priceTracker/homepage');
+
+        // return res.view('user/payment', { payment: payment });
     }
 };
 

@@ -12,6 +12,7 @@
     "cheerio": "^1.0.0-rc.10",
     "grunt": "1.0.4",
     "puppeteer": "^13.0.1",
+    "recharts": "^2.1.9",
     "request": "^2.88.2",
     "sails": "^1.5.0",
     "sails-hook-grunt": "^5.0.0",
