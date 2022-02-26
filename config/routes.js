@@ -37,11 +37,13 @@ module.exports.routes = {
   'GET /priceTracker/json': 'PriceTrackerController.json',
   'GET /priceTracker/homepage': 'PriceTrackerController.homepage',
   'GET /priceTracker/category/:category': 'PriceTrackerController.category',
-  'GET /priceTracker/category/:category/:id': 'PriceTrackerController.product',
-  'POST /priceTracker/category/:category/:id': 'PriceTrackerController.product',
+  'GET /priceTracker/category/:category/:type': 'PriceTrackerController.type',
+  'GET /priceTracker/category/:category/:type/:id': 'PriceTrackerController.product',
+  'POST /priceTracker/category/:category/:type/:id': 'PriceTrackerController.product',
   'GET /priceTracker/cart/:id': 'PriceTrackerController.cart',
   'GET /priceTracker/search': 'PriceTrackerController.search',
 
+  'GET /priceTracker/category/:category/find/:id': 'PriceTrackerController.find',
   'DELETE /priceTracker/:id': 'PriceTrackerController.delete',
 
   'GET /user/signUp': 'UserController.signUp',
@@ -56,7 +58,8 @@ module.exports.routes = {
   'GET /user/account/:id': 'UserController.account',
   'GET /user/wallet/:id': 'UserController.wallet',
   'GET /user/wallet/:id/value': 'UserController.value',
-  'POST /user/wallet/:id/value': 'UserController.value',
+  
+  'POST /user/wallet/:id/value': 'ValueController.addValue',
 
   'GET /priceTracker/:id/purchase': 'PriceTrackerController.populate',
   'GET /priceTracker/:id/preference/json': 'PriceTrackerController.populate_preference',
@@ -72,7 +75,9 @@ module.exports.routes = {
   'POST /user/products/add/:fk': 'UserController.add',
   'POST /user/products/remove/:fk': 'UserController.remove',
 
-
+  'GET /admin/value/json': 'AdminController.populate_value_record',
+  'GET /admin/value': 'AdminController.valuePreview',
+  'POST /admin/approve/:id': 'AdminController.approve',
 
 };
 

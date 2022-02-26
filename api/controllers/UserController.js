@@ -221,6 +221,14 @@ module.exports = {
 
         if (!thatProduct) return res.status(404).json("Product not found.");
 
+        var thatProductInCart = await User.findOne(req.session.userid).populate("products");
+
+        for (var i = 0; i < thatProductInCart.products.length; i++) {
+            if (thatProductInCart.products[i].id == req.params.fk) {
+                return res.status(401).json("You have added. Please check your shopping cart!")
+            }
+        }
+
         await User.addToCollection(req.session.userid, "products").members(req.params.fk);
 
         return res.ok();

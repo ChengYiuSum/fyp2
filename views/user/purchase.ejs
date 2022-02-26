@@ -1,93 +1,116 @@
-<% if (products.length> 0) { %>
-    <form action="/user/record" method="post">
-        <div class="column">
-            <div class="field">
-                <h3 style="font-size:4vw"><b>Shopping Cart</b></h3>
-            </div>
-            <% products.forEach ( function(product) { %>
-                <div class="box">
-                    <article class="media">
-                        <div class="media-left">
-                            <figure class="image is-64x64">
-                                <a href="http://localhost:1337/priceTracker/category/drinks/<%= product.id %>">
-                                    <img src="<%= product.imgUrl %>" alt="">
-                                </a>
-                            </figure>
-                        </div>
-                        <div class="media-content">
-                            <div class="content">
-                                <h3 class="title">
-                                    <a href="http://localhost:1337/priceTracker/category/drinks">
-                                        <input class="input" type="hidden" name="title" value="<%= product.title %>">
-                                        <%= product.title %>
-                                    </a>
-                                </h3>
-                                <p>
-                                    <b>Price:</b>
-                                    <input class="input" type="hidden" name="price" value="<%= product.price %>">
-                                    <%= product.price %>
-                                </p>
-                                <p>
-                                    <b>Shop:</b>
-                                    <input class="input" type="hidden" name="shop" value="<%= product.shop %>">
-                                    <%= product.shop %>
-                                </p>
-                            </div>
-                            <div class="level-right">
-                                <a class="level-item" aria-label="reply">
-                                    <span class="icon is-small">
-                                        <button class="fas fa-trash-alt" type="button" aria-hidden="true"
-                                            onclick="deleteProduct('<%= product.id %>')"></button>
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
+<body>
+    <% if (products.length> 0) { %>
+        <form action="/user/record" method="post">
+            <div class="column">
+                <div class="field">
+                    <h3 style="font-size:4vw"><b>Shopping Cart</b></h3>
                 </div>
-                <br>
-                <% }); %>
-                    <div class="field">
-                        <div class="control">
-                            <button class="button is-link is-pulled-right" type="submit" onclick="submit()">Make
-                                payment</button>
-                        </div>
+                <% products.forEach ( function(product) { %>
+                    <div class="box">
+                        <article class="media">
+                            <div class="media-left">
+                                <figure class="image is-64x64">
+                                    <a href="http://localhost:1337/priceTracker/category/drinks/<%= product.id %>">
+                                        <img src="<%= product.imgUrl %>" alt="">
+                                    </a>
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <div class="content">
+                                    <h3 class="title">
+                                        <a href="http://localhost:1337/priceTracker/category/drinks">
+                                            <input class="input" type="hidden" name="title"
+                                                value="<%= product.title %>">
+                                            <%= product.title %>
+                                        </a>
+                                    </h3>
+                                    <p>
+                                        <b>Price:</b>
+                                        <input class="input" type="hidden" name="price" value="<%= product.price %>">
+                                        <%= product.price %>
+                                    </p>
+                                    <p>
+                                        <b>Shop:</b>
+                                        <input class="input" type="hidden" name="shop" value="<%= product.shop %>">
+                                        <%= product.shop %>
+                                    </p>
+                                    <p>
+                                        <b>Quantity:</b>
+                                        <input class="input" type="text" name="quantity[]" value="">
+                                    </p>
+                                </div>
+                                <div class="level-right">
+                                    <a class="level-item" aria-label="reply">
+                                        <span class="icon is-small">
+                                            <button class="fas fa-trash-alt" type="button" aria-hidden="true"
+                                                onclick="deleteProduct('<%= product.id %>')"></button>
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
                     </div>
-        </div>
-    </form>
-    <% } else { %>
-        <div class="fields">
-            <h3 style="font-size:4vw">
-                Your shopping cart is empty. Go shop now!
-                </h1>
-        </div>
-        <br>
-        <div class="field">
-            <p class="control">
-                <a class="button is-info" href="/priceTracker/homepage">Shop now
-                </a>
-            </p>
-        </div>
-        <% } %>
+                    <br>
+                    <% }); %>
+                        <div class="field">
+                            <div class="control">
+                                <button class="button is-link is-pulled-right" type="submit" onclick="Geeks()">Make
+                                    payment</button>
+                            </div>
+                        </div>
+            </div>
+        </form>
+        <% } else { %>
+            <div class="fields">
+                <h3 style="font-size:4vw">
+                    Your shopping cart is empty. Go shop now!
+                    </h1>
+            </div>
+            <br>
+            <div class="field">
+                <p class="control">
+                    <a class="button is-info" href="/priceTracker/homepage">Shop now
+                    </a>
+                </p>
+            </div>
+            <% } %>
+</body>
 
 
-            <script>
-                async function deleteProduct(id) {
-                    var r = confirm("Confirm Delete?", id);
+<script>
+    async function deleteProduct(id) {
+        var r = confirm("Confirm Delete?", id);
 
-                    if (r) {
-                        var response = await fetch("/user/products/remove/" + id, {
-                            method: "POST",
-                        });
+        if (r) {
+            var response = await fetch("/user/products/remove/" + id, {
+                method: "POST",
+            });
 
-                        if (response.ok) {
-                            alert("Product deleted.");
-                            location.assign("/user/purchase");
-                        } else {
-                            alert(response.status + ": " + response.statusText);
-                        }
+            if (response.ok) {
+                alert("Product deleted.");
+                location.assign("/user/purchase");
+            } else {
+                alert(response.status + ": " + response.statusText);
+            }
 
-                    } else {
-                        alert("cancelled");
-                    }
-                };
-            </script>
+        } else {
+            alert("cancelled");
+        }
+    };
+</script>
+
+<script type="text/javascript">
+    var k = "The respective values are :";
+    function Geeks() {
+        var input = document.getElementsByName('quantity[]');
+
+        for (var i = 0; i < input.length; i++) {
+            var a = input[i];
+            k = k + "quantity[" + i + "].value= "
+                + a.value + " ";
+        }
+
+        // document.getElementById("par").innerHTML = k;
+        // document.getElementById("po").innerHTML = "Output";
+    }
+</script>

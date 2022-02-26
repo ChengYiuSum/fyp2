@@ -65,7 +65,7 @@ module.exports = {
                 if (num == 1) {
                     for (let a of await page.$$('.ProductItem > a[href^="/tc/product/"]')) {
                         try {
-                            console.log("entered retrieve ztore data")
+                            // console.log("entered retrieve ztore data")
                             let productUrl = await a.evaluate(node => node.href)
                             let productID = productUrl.replace('https://www.ztore.com/tc/product/', '').split('-').slice(-2)[0]
                             let imgUrl = 'https://image.ztore.com/images/ztore/production/product/260px/' + productID + '_1.jpg'
@@ -74,7 +74,7 @@ module.exports = {
                             let title = await img.evaluate(node => node.getAttribute('alt'))
                             // add a if statement here (if no promotion)
                             let price = await a.$eval('.price > .promotion', node => node.textContent);
-                            console.log(productUrl, imgUrl, title, price)
+                            // console.log(productUrl, imgUrl, title, price)
 
                             var thatProduct = await PriceTracker.findOne({ title: title });
 
@@ -82,9 +82,9 @@ module.exports = {
 
 
                             if (!thatProduct) {
-                                var product = await PriceTracker.create({ "title": title, "price": price, "imgUrl": imgUrl, "shop": "ztore" }).fetch();
-                                console.log("product created")
-                                console.log(product)
+                                var product = await PriceTracker.create({ "title": title, "price": price, "imgUrl": imgUrl, "shop": "ztore", "type": "carbonated-drinks" }).fetch();
+                                // console.log("product created")
+                                // console.log(product)
                                 //return res.status(300).json("Successfully retrieved");
                             } else if (thatProduct) {
                                 //Update
@@ -96,7 +96,7 @@ module.exports = {
                 } else if (num == 2) {
                     for (let a of await page.$$('.grid-item__content > a[href^="/collections/carbonated-drink/products/"]')) {
                         try {
-                            console.log("entered retrieve citysuper data")
+                            // console.log("entered retrieve citysuper data")
                             let title = await a.$eval('.grid-product__title', node => node.textContent)
                             let price = await a.$eval('.grid-product__price [aria-hidden="true"]', node => node.textContent);
                             let noScript = await a.$eval('.grid-product__image-wrap noscript', node => node.textContent);
@@ -107,9 +107,9 @@ module.exports = {
                             var thatProduct = await PriceTracker.findOne({ title: title });
 
                             if (!thatProduct) {
-                                var product = await PriceTracker.create({ "title": title, "price": price, "imgUrl": imgUrl, "shop": "citySuper" }).fetch();
-                                console.log("product created")
-                                console.log(product)
+                                var product = await PriceTracker.create({ "title": title, "price": price, "imgUrl": imgUrl, "shop": "citySuper", "type": "carbonated-drinks" }).fetch();
+                                // console.log("product created")
+                                // console.log(product)
                                 //return res.status(300).json("Successfully retrieved");
                             } else if (thatProduct) {
                                 //Update
@@ -119,6 +119,8 @@ module.exports = {
 
                 }
             }
+
+
 
             // async function scrapeProduct(url, url2, url3, url4) {
             //     const browser = await puppeteer.launch();
@@ -300,6 +302,12 @@ module.exports = {
         return res.view('priceTracker/category', { thatCategory: thatCategory })
     },
 
+    type: async function (req, res) {
+        var everyproducts = await PriceTracker.find();
+
+        return res.view('priceTracker/type', { everyproducts: everyproducts })
+    },
+
     json: async function (req, res) {
         var everyproducts = await PriceTracker.find();
 
@@ -376,4 +384,26 @@ module.exports = {
 
         return res.view('priceTracker/search', { products: thoseProducts, count: count });
     },
+
+    find: async function (req, res) {
+        var thatProduct = await PriceTracker.findOne(req.params.id);
+
+        console.log(thatProduct)
+
+        var string1 = JSON.stringify(thatProduct)
+        console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+
+
+        console.log(string1)
+        var obj = JSON.parse(string1)
+        console.log(obj)
+
+        console.log(obj.title)
+
+
+
+
+        return res.json(thatProduct)
+
+    }
 }

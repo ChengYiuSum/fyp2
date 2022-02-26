@@ -49,7 +49,7 @@
 
         <div class="modal-content">
             <div class="box">
-                <form action="/priceTracker/category/drinks/<%= product.id %>" method="POST">
+                <form action="/priceTracker/category/drinks/<%= product.type %>/<%= product.id %>" method="POST">
                     <p style="font-size:30px"><b>Preference</b></p>
                     <div class="field">
                         <label class="label">Prefered Price:</label>
@@ -76,7 +76,8 @@
 
                     <div class="field">
                         <div class="control">
-                            <button class="button is-link" type="submit" onclick="submit()">Define</button>
+                            <button class="button is-link" type="submit"
+                                onclick="matching('<%= product.id %>')">Define</button>
                         </div>
                     </div>
                 </form>
@@ -99,13 +100,16 @@
 
             if (response.ok) {
                 alert("Add to cart success");
-                location.assign("/priceTracker/homepage");
+                location.assign("/priceTracker/category/drinks/carbonated-drinks/" + fk);
             } else if (response.status == 409) {
                 var e = await response.json();
                 alert(e);
             } else if (response.status == 404) {
                 var e = await response.json();
                 alert(e);
+            } else if (response.status == 401) {
+                var e = await response.json();
+                alert(e)
             }
         } else {
             alert(response.statusText);
@@ -160,3 +164,75 @@
         });
     });
 </script>
+
+<script>
+    async function matching(productID) {
+        alert(productID)
+        var thatProduct = await fetch("/priceTracker/category/drinks/find/" + productID, {
+            method: "GET"
+        });
+        console.log("type thatProduct :" + typeof(thatProduct))
+
+        console.log(thatProduct)
+
+        console.log("thatProduct.title" + thatProduct.title)
+
+        alert("thatProduct.title " + thatProduct.title)
+
+        var string1 = JSON.stringify(thatProduct)
+
+        console.log("type string1 :" + typeof(string1))
+
+        console.log("thatProduct.title" + string1.title)
+
+        alert("string1.title " + string1.title)
+
+        var obj = JSON.parse(string1)
+
+        console.log("type obj :" + typeof(obj))
+
+        console.log("obj.title " + obj.title)
+
+        alert("obj.title " + obj.title)
+
+    }
+</script>
+
+<!-- <script>
+    var matching = (async (productID) => {
+        try {
+            alert(productID)
+            var thatProduct = await fetch("/priceTracker/category/drinks/find/" + productID, {
+                method: "GET"
+            });
+
+            console.log(thatProduct)
+
+            console.log("thatProduct.title" + thatProduct.title)
+
+            alert("thatProduct.title " + thatProduct.title)
+
+            var string1 = JSON.stringify(thatProduct)
+
+            console.log("thatProduct.title" + string1.title)
+
+            alert("string1.title " + string1.title)
+
+            var obj = JSON.parse(string1)
+
+            console.log("obj.title " + obj.title)
+
+            alert("obj.title " + obj.title)
+
+        } catch (e) {
+            alert(e)
+        }
+    });
+</script> -->
+
+
+<!-- var thatProduct = await fetch("/priceTracker/category/drinks/find/" + productID, {
+method: "GET"
+});
+
+alert(thatProduct) -->

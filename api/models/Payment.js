@@ -18,11 +18,18 @@ module.exports = {
     },
 
     title: {
-      type: "string"
+      type: "json",
+      columnType: 'array'
     },
 
     price: {
-      type: "number"
+      type: "json",
+      columnType: 'array'
+    },
+
+    quantity: {
+      type: "json",
+      columnType: 'array'
     },
 
     total: {

@@ -1,5 +1,5 @@
 /**
- * Record.js
+ * Value.js
  *
  * @description :: A model definition represents a database table/collection.
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
@@ -13,14 +13,10 @@ module.exports = {
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
 
-    total: {
+    amount: {
       type: "number"
     },
 
-    quantity: {
-      type: "json",
-      columnType: 'array'
-    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
@@ -31,10 +27,15 @@ module.exports = {
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
-    create: {
-      model: 'user'
-    }
+    user_record: {
+      collection: 'User',
+      via: 'value_record'
+    },
 
+    admin_record: {
+      collection: 'Admin',
+      via: 'values'
+    },
   },
 
 };

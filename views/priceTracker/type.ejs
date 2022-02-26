@@ -1,0 +1,68 @@
+<div class="columns">
+    <div class="column">
+        <h3 style="text-align:center; font-size:30px">
+            ztore
+        </h3>
+        <% everyproducts.forEach ( function(product) { %>
+            <% if(product.type=="carbonated-drinks" ) { %>
+                <% if(product.shop=="ztore" ) { %>
+                    <div class="card text-center">
+                        <div class="card-image">
+                            <figure class="image">
+                                <a
+                                    href="http://localhost:1337/priceTracker/category/drinks/<%= product.type %>/<%= product.id %>">
+                                    <img src="<%= product.imgUrl %>" alt="">
+                                </a>
+                            </figure>
+                        </div>
+                        <h5 class="title">
+                            <a
+                                href="http://localhost:1337/priceTracker/category/drinks/<%= product.type %>/<%= product.id %>">
+                                <p style="font-size:20px">
+                                    <%= product.title %>
+                                </p>
+                            </a>
+                        </h5>
+                    </div>
+                    <% } %>
+                        <br>
+                        <% } %>
+
+                            <% }); %>
+    </div>
+
+
+    <div class="column">
+        <h3 style="text-align:center; font-size:30px">
+            CitySuper
+        </h3>
+        <% everyproducts.forEach ( function(product) { %>
+            <% if(product.type=="carbonated-drinks" ) { %>
+
+                <% if(product.shop=="citySuper" ) { %>
+                    <div class="card text-center">
+                        <div class="card-image">
+                            <figure class="image">
+                                <a
+                                    href="http://localhost:1337/priceTracker/category/drinks/<%= product.type %>/<%= product.id %>">
+                                    <img src="<%= product.imgUrl %>" alt="">
+                                </a>
+                            </figure>
+                        </div>
+                        <h5 class="title">
+                            <a
+                                href="http://localhost:1337/priceTracker/category/drinks/<%= product.type %>/<%= product.id %>">
+                                <p style="font-size:20px">
+                                    <%= product.title %>
+                                </p>
+                            </a>
+                        </h5>
+                    </div>
+                    <br>
+                    <% } %>
+                        <% } %>
+
+                            <% }); %>
+
+    </div>
+</div>
