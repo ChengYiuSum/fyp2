@@ -16,8 +16,6 @@ module.exports = {
         var user = await User.findOne(req.session.userid);
         await User.addToCollection(user.id, "value_record").members(value_record.id)
 
-        // await Value.updateOne(req.session.userid).set({ value: thatUser.value + parseInt(req.body.value) });
-
         return res.redirect('/user/wallet/' + req.session.userid);
 
     }

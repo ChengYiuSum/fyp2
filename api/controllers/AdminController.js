@@ -18,7 +18,7 @@ module.exports = {
                 sort: 'id DESC',
                 limit: limitColum,
                 skip: offset,
-            }).populate("admin_record");
+            }).populate("user_record");
 
             return res.json(value_form);	    // for ajax request
 
@@ -40,7 +40,7 @@ module.exports = {
             // find all records
             var all = await Value.find({
                 sort: 'id DESC',
-            }).populate("admin_record");
+            }).populate("user_record");
 
             return res.view('admin/value', { forms: all, numOfRecords: count });
 
@@ -65,9 +65,13 @@ module.exports = {
 
     approve: async function (req, res) {
 
-        var thatValueAdded = await User.findOne(req.params.id).populate("admin_record");
+        var thatValueAdded = await Value.findOne(req.params.id).populate("user_record");
 
         if (!thatValueAdded) return res.notFound();
+
+        var thatUser = await User.findOne(thatValueAdded.user_record[0].id)
+
+        if (!thatUser) return res.notFound();
 
         // console.log("testing");
         // console.log(thatCoachPaymentForm.id);
@@ -75,14 +79,19 @@ module.exports = {
         // console.log("testing2");
         // console.log(thatCoachPaymentForm);
 
-        // await User.updateOne(thatValueAdded.id).set({ status: "Approved" });
+        await User.updateOne(thatValueAdded.user_record[0].id).set({
+            value: thatUser.value + parseInt(thatValueAdded.value)
+        });
+
+        await Value.removeFromCollection(req.params.id, "user_record").members(thatValueAdded.user_record[0].id);
+        await Value.destroyOne(req.params.id);
 
         return res.ok();
     },
 
     populate_value_record: async function (req, res) {
 
-        var value = await Admin.findOne(req.session.userid).populate("admin_record");
+        var value = await Value.find().populate("user_record");
 
         console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
         console.log(value)

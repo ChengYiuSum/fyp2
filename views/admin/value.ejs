@@ -1,19 +1,71 @@
 <div class="content admin w-100">
 
-    <h5 id="jump" class="main-heading1">
-        待處理的<span class="highlight">申請</span>
-    </h5>
+    <h3 style="font-size:4vw"><b>Pendinig Value added</b></h3>
 
     <section class="container-fluid">
 
         <div class="row">
-            <div class="col">
-                <a href="/admin/coachPayment/waiting/#jump" action="false" type="button" class="btn btn-dark"
-                    style="font-size: 14pt;">待處理的申請</a>
-            </div>
             <div class="col ">
-                <a href="/admin/coachPayment/waiting/#jump" action="false" type="button"
-                    class="btn btn-link float-right" style="font-size: 14pt;">總數: <%= numOfRecords %> </a>
+                Total Number: <%= numOfRecords %>
             </div>
         </div>
         <br>
+
+        <table class="table table-striped">
+
+
+            <thead>
+
+                <th scope="col">Name <br></th>
+                <th scope="col">Value <br></th>
+                <th scope="col"> <br></th>
+
+            </thead>
+
+
+            <tbody id="myTable">
+
+                <% forms.forEach( function(form) { %>
+
+                    <tr>
+                        <td>
+                            <%= form.user_record[0].name %>
+                        </td>
+                        <td>
+                            <%= form.value %>
+                        </td>
+                        <td>
+                            <button class="button is-link" type="submit"
+                                onclick="approve('<%= form.id %>')">Approve</button>
+                        </td>
+                    </tr>
+
+                    <% }); %>
+
+            </tbody>
+        </table>
+    </section>
+</div>
+
+<script>
+    async function approve(fk) {
+        var r = confirm("Confirm Approve?");
+        if (r) {
+            var response = await fetch("/admin/approve/" + fk, {
+                method: "POST"
+            });
+            if (response.ok) {
+                alert("Approve Success");
+                location.assign("/admin/value");
+            } else if (response.status == 409) {
+                var e = await response.json();
+                alert(e);
+            } else if (response.status == 404) {
+                var e = await response.json();
+                alert(e);
+            }
+        } else {
+            alert(response.statusText);
+        }
+    }
+</script>
