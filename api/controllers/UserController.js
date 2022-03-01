@@ -158,7 +158,7 @@ module.exports = {
 
     populate_record: async function (req, res) {
 
-        var user = await User.findOne(req.session.userid).populate("record");
+        var user = await User.findOne(req.session.userid).populate("records");
 
         if (!user) return res.notFound();
 
@@ -167,7 +167,7 @@ module.exports = {
 
     populate_payment: async function (req, res) {
 
-        var user = await User.findOne(req.session.userid).populate("payment");
+        var user = await User.findOne(req.session.userid).populate("payments");
 
         if (!user) return res.notFound();
 
@@ -202,10 +202,13 @@ module.exports = {
         } else {
             for (var i = 0; i < record.price.length; i++) {
                 price = record.price[i].substring(1);
-                total += parseFloat(price)
+                total += parseFloat(price) * parseInt(record.quantity[i])
             }
         }
 
+        total = total.toFixed(1)
+
+        console.log("Record:")
         console.log(record)
 
         return res.view('user/record', { record: record, count: count, list: list, total: total });
@@ -256,11 +259,13 @@ module.exports = {
 
         if (req.method == "GET") return res.view('user/payment'), { payment: payment };
 
+
+
         // var payment = await Payment.create(req.body).fetch();
 
-        return res.redirect('/priceTracker/homepage');
+        // return res.redirect('/priceTracker/homepage');
 
-        // return res.view('user/payment', { payment: payment });
+        return res.view('user/payment', { payment: payment });
     }
 };
 

@@ -9,11 +9,13 @@
                     <th>No.</th>
                     <th>Title</th>
                     <th>Store</th>
+                    <th>Quantity</th>
                     <th>Price</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
+                    <th></th>
                     <th></th>
                     <th></th>
                     <th>Total:</th>
@@ -39,6 +41,10 @@
                             <%= record.shop %>
                         </td>
                         <td>
+                            <input class="input" type="hidden" name="price" value="<%= record.quantity[0] %>">
+                            <%= record.quantity[0] %>
+                        </td>
+                        <td>
                             <input class="input" type="hidden" name="price" value="<%= record.price %>">
                             <%= record.price %>
                         </td>
@@ -60,6 +66,11 @@
                                         <input class="input" type="hidden" name="shop"
                                             value="<%= record.shop[count] %>">
                                         <%= record.shop[count] %>
+                                    </td>
+                                    <td>
+                                        <input class="input" type="hidden" name="price"
+                                            value="<%= record.quantity[count] %>">
+                                        <%= record.quantity[count] %>
                                     </td>
                                     <td>
                                         <input class="input" type="hidden" name="price"

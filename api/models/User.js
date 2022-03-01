@@ -72,17 +72,17 @@ module.exports = {
     },
 
     preferences: {
-      collection: 'Preference',
+      collection: 'preference',
       via: 'define'
     },
 
     records: {
-      collection: 'Record',
+      collection: 'record',
       via: 'create'
     },
 
     payments: {
-      collection: 'Payment',
+      collection: 'payment',
       via: 'make'
     },
 

@@ -52,9 +52,10 @@
                     </div>
                     <br>
                     <% }); %>
+                        <input class="input" type="hidden" name="create" value="<%= req.session.userid %>" required>
                         <div class="field">
                             <div class="control">
-                                <button class="button is-link is-pulled-right" type="submit" onclick="Geeks()">Make
+                                <button class="button is-link is-pulled-right" type="submit" onclick="">Make
                                     payment</button>
                             </div>
                         </div>
@@ -99,7 +100,7 @@
     };
 </script>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     var k = "The respective values are :";
     function Geeks() {
         var input = document.getElementsByName('quantity[]');
@@ -113,4 +114,4 @@
         // document.getElementById("par").innerHTML = k;
         // document.getElementById("po").innerHTML = "Output";
     }
-</script>
+</script> -->

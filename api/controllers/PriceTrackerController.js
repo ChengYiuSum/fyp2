@@ -16,7 +16,7 @@ module.exports = {
             const puppeteer = require('puppeteer');
 
 
-            console.log("entered home function")
+            // console.log("entered home function")
 
             async function scrapeProduct(url, num) {
                 const browser = await puppeteer.launch();
@@ -80,9 +80,12 @@ module.exports = {
 
                             //     var product = await PriceTracker.create({ "title": title, "price": price, "category": category, "shop": "citySuper" }).fetch();
 
+                            var today = new Date()
+                            var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+                            // console.log(date)
 
                             if (!thatProduct) {
-                                var product = await PriceTracker.create({ "title": title, "price": price, "imgUrl": imgUrl, "shop": "ztore", "type": "carbonated-drinks" }).fetch();
+                                var product = await PriceTracker.create({ "title": title, "price": price, "imgUrl": imgUrl, "shop": "ztore", "type": "carbonated-drinks", "date": date }).fetch();
                                 // console.log("product created")
                                 // console.log(product)
                                 //return res.status(300).json("Successfully retrieved");
@@ -327,9 +330,47 @@ module.exports = {
 
             var preference = await Preference.create(req.body).fetch();
 
-            console.log(preference)
+            preferencedProduct = await PriceTracker.findOne(preference.own);
 
-            return res.view('priceTracker/product', { product: thatProduct })
+            // console.log(preference)
+            // console.log("~~~~~~~~~~~~~~~~~~~~~~")
+            // console.log("preference: " + preference.prePrice)
+            // console.log("----------------------")
+            // console.log("preferencedProduct: " + parseInt(preferencedProduct.price.substring(1)))
+
+            if (parseInt(preferencedProduct.price.substring(1)) <= preference.prePrice) {
+                console.log("matched sucess")
+                var message = "The price is below your prefered price now. You can click the \"add to cart \" button to purchase it!"
+
+                sails.hooks['email-without-ejs'].send({
+                    to: "sammy3963@gmail.com",
+                    subject: "Testing",
+                    html: await sails.renderView('priceTracker/testEmail', {
+                        recipientNo: req.body.applyno,
+                        changesform: req.body,
+                        layout: false
+                    })
+                }, function (err) { console.log(err || "It worked!") })
+
+            } else {
+                console.log("match unsucess")
+                var message = "When the price fit your prefered price. You will get notice!"
+
+                sails.hooks['email-without-ejs'].send({
+                    to: "18225756@life.hkbu.edu.hk",
+                    subject: "PriceTracker: Product's prefered price is arrived!",
+                    html: await sails.renderView('priceTracker/testEmail', {
+                        recipientName: req.session.name,
+                        preference: preference,
+                        preferencedProduct: preferencedProduct,
+                        senderName: "PriceTracker",
+                        layout: false
+                    })
+                }, function (err) { console.log(err || "It worked!") })
+            }
+
+            console.log(message)
+            return res.view('priceTracker/product', { product: thatProduct, message: message })
         }
     },
 
@@ -380,30 +421,41 @@ module.exports = {
 
         var count = 0;
 
-        console.log(thoseProducts)
+        // console.log(thoseProducts)
 
         return res.view('priceTracker/search', { products: thoseProducts, count: count });
     },
 
-    find: async function (req, res) {
-        var thatProduct = await PriceTracker.findOne(req.params.id);
+    // find: async function (req, res) {
 
-        console.log(thatProduct)
+    // console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!entered")
 
-        var string1 = JSON.stringify(thatProduct)
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    // var thatProduct = await User.findOne(req.session.userid).populate('preferences')
 
+    // var cnt = thatProduct.preferences.length
 
-        console.log(string1)
-        var obj = JSON.parse(string1)
-        console.log(obj)
+    // console.log(thatProduct)
 
-        console.log(obj.title)
+    // console.log(cnt)
+    // console.log(thatProduct.preferences[cnt].id)
 
-
+    // var thatProduct = await PriceTracker.findOne(req.params.id);
 
 
-        return res.json(thatProduct)
 
-    }
+    // console.log(thatProduct)
+
+    // var string1 = JSON.stringify(thatProduct)
+    // console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+
+
+    // console.log(string1)
+    // var obj = JSON.parse(string1)
+    // console.log(obj)
+
+    // console.log(obj.title)
+
+    //     return res.ok()
+
+    // }
 }

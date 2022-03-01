@@ -33,7 +33,7 @@ module.exports = {
 
     create: {
       model: 'user'
-    }
+    },
 
   },
 

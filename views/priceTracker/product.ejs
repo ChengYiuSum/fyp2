@@ -76,8 +76,7 @@
 
                     <div class="field">
                         <div class="control">
-                            <button class="button is-link" type="submit"
-                                onclick="matching('<%= product.id %>')">Define</button>
+                            <button class="button is-link" type="submit" onclick="matching(message)">Define</button>
                         </div>
                     </div>
                 </form>
@@ -166,34 +165,34 @@
 </script>
 
 <script>
-    async function matching(productID) {
-        alert(productID)
-        var thatProduct = await fetch("/priceTracker/category/drinks/find/" + productID, {
-            method: "GET"
-        });
-        console.log("type thatProduct :" + typeof(thatProduct))
+    async function matching(str) {
+        alert(str)
+        // var thatProduct = await fetch("/priceTracker/category/drinks/find/" + productID, {
+        //     method: "GET"
+        // });
+        // console.log("type thatProduct :" + typeof(thatProduct))
 
-        console.log(thatProduct)
+        // console.log(thatProduct)
 
-        console.log("thatProduct.title" + thatProduct.title)
+        // console.log("thatProduct.title" + thatProduct.title)
 
-        alert("thatProduct.title " + thatProduct.title)
+        // alert("thatProduct.title " + thatProduct.title)
 
-        var string1 = JSON.stringify(thatProduct)
+        // var string1 = JSON.stringify(thatProduct)
 
-        console.log("type string1 :" + typeof(string1))
+        // console.log("type string1 :" + typeof(string1))
 
-        console.log("thatProduct.title" + string1.title)
+        // console.log("thatProduct.title" + string1.title)
 
-        alert("string1.title " + string1.title)
+        // alert("string1.title " + string1.title)
 
-        var obj = JSON.parse(string1)
+        // var obj = JSON.parse(string1)
 
-        console.log("type obj :" + typeof(obj))
+        // console.log("type obj :" + typeof(obj))
 
-        console.log("obj.title " + obj.title)
+        // console.log("obj.title " + obj.title)
 
-        alert("obj.title " + obj.title)
+        // alert("obj.title " + obj.title)
 
     }
 </script>
