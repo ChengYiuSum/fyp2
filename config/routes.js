@@ -57,8 +57,9 @@ module.exports.routes = {
 
   'GET /user/account/:id': 'UserController.account',
   'GET /user/wallet/:id': 'UserController.wallet',
+  'POST /user/wallet/:id': 'UserController.wallet',
   'GET /user/wallet/:id/value': 'UserController.value',
-  
+
   'POST /user/wallet/:id/value': 'ValueController.addValue',
 
   'GET /priceTracker/:id/purchase': 'PriceTrackerController.populate',
@@ -69,7 +70,9 @@ module.exports.routes = {
   'GET /user/payment/json': 'UserController.populate_payment',
 
   'GET /user/purchase': 'UserController.purchase',
-  'POST /user/record': 'UserController.purchase',
+  'POST /user/purchase': 'UserController.purchase',
+  'GET /user/record': 'UserController.record',
+  'POST /user/record': 'UserController.record',
   'GET /user/payment': 'UserController.payment',
   'POST /user/payment': 'UserController.payment',
   'POST /user/products/add/:fk': 'UserController.add',
@@ -78,6 +81,8 @@ module.exports.routes = {
   'GET /admin/value/json': 'AdminController.populate_value_record',
   'GET /admin/value': 'AdminController.valuePreview',
   'POST /admin/approve/:id': 'AdminController.approve',
+
+  'GET /user/test': 'UserController.test',
 
 };
 

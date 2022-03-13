@@ -1,0 +1,21 @@
+<body onload="startTime()">
+  <a class="control" id="txt">Today</a>
+</body>
+
+<script>
+  function startTime() {
+    const today = new Date();
+
+    let d = today.getDay();
+    let h = today.getHours();
+    h = h - 5;
+    let m = today.getMinutes();
+    let s = today.getSeconds();
+
+    // document.getElementById('txt').innerHTML = d + h + ":" + m + ":" + s;
+    document.getElementById('txt').innerHTML = today;
+    // print(d + h + m)
+
+    setTimeout(startTime, 1000);
+  }
+</script>

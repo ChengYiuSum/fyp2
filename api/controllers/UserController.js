@@ -33,6 +33,7 @@ module.exports = {
             req.session.userid = user.id;
             req.session.value = user.value;
             req.session.cardType = user.cardType;
+            req.session.cardNum = user.cardNum;
             return res.json(user);
             // return res.redirect('/');
         }
@@ -50,6 +51,7 @@ module.exports = {
             req.session.userid = user.id;
             req.session.value = user.value;
             req.session.cardType = user.cardType;
+            req.session.cardNum = user.cardNum;
             return res.json(user);
             // return res.redirect('/');
         });
@@ -108,13 +110,33 @@ module.exports = {
     },
 
     wallet: async function (req, res) {
+        var thatUser = await User.findOne(req.params.id);
+
+        if (!thatUser) return res.notFound();
+
         if (req.method == "GET") {
 
-            var thatUser = await User.findOne(req.params.id);
-
-            if (!thatUser) return res.notFound();
-
             return res.view('user/wallet', { user: thatUser });
+
+        } else {
+            await User.updateOne(req.params.id).set({
+                cardType: req.body.cardType,
+                cardNum: req.body.cardNum
+            })
+
+            // console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+            console.log('req.body.cardType: ' + req.body.cardType)
+            // console.log('req.body.cardNum: ' + req.body.cardNum)
+
+            req.session.cardType = req.body.cardType;
+
+            req.session.cardNum = req.body.cardNum;
+
+            // console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+            console.log('req.session.cardType: ' + req.session.cardType)
+            console.log('req.session.cardNum: ' + req.session.cardNum)
+
+            return res.redirect('/user/wallet/' + req.session.userid);
         }
     },
 
@@ -187,31 +209,56 @@ module.exports = {
         // } else {
         //     return res.view('user/purchase', { products: user.products, user: user });
         // }
-        if (req.method == "GET") return res.view('user/purchase', { products: user.products, user: user });
+        if (req.method == "GET") {
+            return res.view('user/purchase', { products: user.products, user: user });
+        }
 
         var record = await Record.create(req.body).fetch();
 
-        var count = 0
-        var list = 1
-        var total = 0.0
-        var price = 0.0
+        return res.redirect('/user/record');
+    },
 
-        if (typeof record.price === 'string') {
-            price = record.price.substring(1);
-            total = parseFloat(price)
-        } else {
-            for (var i = 0; i < record.price.length; i++) {
-                price = record.price[i].substring(1);
-                total += parseFloat(price) * parseInt(record.quantity[i])
+    record: async function (req, res) {
+        var record = await User.findOne(req.session.userid).populate("records");
+
+        // record = record.records[record.length - 1]
+
+        // console.log(record)
+        // console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        // console.log(record.records[record.records.length - 1])
+
+        if (req.method == "GET") {
+
+            var count = 0
+            var list = 1
+            var total = 0.0
+            var price = 0.0
+
+            if (typeof record.records[record.records.length - 1].price === 'string') {
+                price = record.records[record.records.length - 1].price.substring(1);
+                total = parseFloat(price) * parseInt(record.records[record.records.length - 1].quantity)
+            } else {
+                for (var i = 0; i < record.records[record.records.length - 1].price.length; i++) {
+                    price = record.records[record.records.length - 1].price[i].substring(1);
+                    total += parseFloat(price) * parseInt(record.records[record.records.length - 1].quantity[i])
+                }
             }
+
+            total = total.toFixed(1)
+
+            console.log("Record:")
+            console.log(record)
+
+            return res.view('user/record', { record: record.records[record.records.length - 1], count: count, list: list, total: total });
+        } else {
+
+            var payment = await Payment.create(req.body).fetch();
+
+            console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+            console.log(payment)
+
+            return res.redirect('/user/payment')
         }
-
-        total = total.toFixed(1)
-
-        console.log("Record:")
-        console.log(record)
-
-        return res.view('user/record', { record: record, count: count, list: list, total: total });
     },
 
 
@@ -255,17 +302,38 @@ module.exports = {
     },
 
     payment: async function (req, res) {
-        var payment = await Payment.create(req.body).fetch();
+        var user = await User.findOne(req.session.userid).populate("records");
 
-        if (req.method == "GET") return res.view('user/payment'), { payment: payment };
+        var payment = await User.findOne(req.session.userid).populate("payments");
 
 
+        if (req.method == "GET") {
 
-        // var payment = await Payment.create(req.body).fetch();
+            return res.view('user/payment', { user: user, payment: payment });
 
-        // return res.redirect('/priceTracker/homepage');
+        }
 
-        return res.view('user/payment', { payment: payment });
+        var product = await User.findOne(req.session.userid).populate("products");
+
+        if (product.products.length > 1) {
+            for (var i = 0; i < product.products.length; i++) {
+                await User.removeFromCollection(req.session.userid, "products").members(product.products[i].id);
+            }
+        } else {
+            await User.removeFromCollection(req.session.userid, "products").members(product.products[0].id);
+        }
+
+        if (payment.payments[payment.payments.length - 1].total > req.session.value) {
+            return res.status(401).json("You have not enough money in your account!\n1. Please add money to your account.\n2. Please pay by credit card.")
+        } else {
+            await User.updateOne(req.session.userid).set({ value: user.value - payment.payments[payment.payments.length - 1].total });
+            req.session.value = user.value - payment.payments[payment.payments.length - 1].total
+            return res.ok()
+        }
+    },
+
+    test: async function (req, res) {
+        return res.view('user/test')
     }
 };
 

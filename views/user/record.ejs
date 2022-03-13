@@ -1,4 +1,4 @@
-<form action="/user/payment" method="post">
+<form action="/user/record" method="post">
     <div class="column">
         <div class="field">
             <h3 style="font-size:4vw"><b>Summary</b></h3>
@@ -20,7 +20,6 @@
                     <th></th>
                     <th>Total:</th>
                     <th>
-                        <input class="input" type="hidden" name="total" value="<%= total %>">
                         $<%= total %>
                     </th>
                 </tr>
@@ -41,7 +40,7 @@
                             <%= record.shop %>
                         </td>
                         <td>
-                            <input class="input" type="hidden" name="price" value="<%= record.quantity[0] %>">
+                            <input class="input" type="hidden" name="quantity" value="<%= record.quantity[0] %>">
                             <%= record.quantity[0] %>
                         </td>
                         <td>
@@ -68,7 +67,7 @@
                                         <%= record.shop[count] %>
                                     </td>
                                     <td>
-                                        <input class="input" type="hidden" name="price"
+                                        <input class="input" type="hidden" name="quantity"
                                             value="<%= record.quantity[count] %>">
                                         <%= record.quantity[count] %>
                                     </td>
@@ -85,6 +84,8 @@
                                         <% } %>
         </table>
     </div>
+    <input name="total" value="<%= total %>" readonly hidden>
+    <input class="input" type="hidden" name="make" value="<%= req.session.userid %>">
     <div class="field">
         <div class="control">
             <button class="button is-link is-pulled-right" type="submit" onclick="submit()">Confirm payment</button>

@@ -1,6 +1,6 @@
 <body>
     <% if (products.length> 0) { %>
-        <form action="/user/record" method="post">
+        <form action="/user/purchase" method="post">
             <div class="column">
                 <div class="field">
                     <h3 style="font-size:4vw"><b>Shopping Cart</b></h3>
@@ -36,7 +36,7 @@
                                     </p>
                                     <p>
                                         <b>Quantity:</b>
-                                        <input class="input" type="text" name="quantity[]" value="">
+                                        <input class="input" type="number" name="quantity[]" value="1">
                                     </p>
                                 </div>
                                 <div class="level-right">
