@@ -59,6 +59,7 @@ module.exports.routes = {
   'GET /user/wallet/:id': 'UserController.wallet',
   'POST /user/wallet/:id': 'UserController.wallet',
   'GET /user/wallet/:id/value': 'UserController.value',
+  'POST /user/wallet/update/:id': 'UserController.wallet_update',
 
   'POST /user/wallet/:id/value': 'ValueController.addValue',
 

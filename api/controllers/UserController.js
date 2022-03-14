@@ -140,6 +140,22 @@ module.exports = {
         }
     },
 
+    update_wallet: async function (req, res) {
+
+        var updatedMWallet = await User.updateOne(req.params.id).set({ cardType: req.body.cardType, cardNum: req.body.cardNum, value: 0 });
+
+        if (!updatedMWallet) return res.notFound();
+
+        req.session.cardType = req.body.cardType;
+
+        req.session.cardNum = req.body.cardNum;
+
+        req.session.value = 0;
+
+        return res.redirect('/user/wallet/' + req.params.id);
+
+    },
+
     value: async function (req, res) {
         var thatUser = await User.findOne(req.session.userid);
 

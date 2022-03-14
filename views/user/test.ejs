@@ -1,5 +1,6 @@
 <body onload="startTime()">
   <a class="control" id="txt">Today</a>
+  <a class="control" id="text">Testing</a>
 </body>
 
 <script>
@@ -15,6 +16,12 @@
     // document.getElementById('txt').innerHTML = d + h + ":" + m + ":" + s;
     document.getElementById('txt').innerHTML = today;
     // print(d + h + m)
+
+    // if (m % 1 == m) {
+    //   alert("testing")
+    // } else {
+    //   alert("not work")
+    // }
 
     setTimeout(startTime, 1000);
   }
