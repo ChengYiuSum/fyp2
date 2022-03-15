@@ -426,6 +426,13 @@ module.exports = {
         return res.view('priceTracker/search', { products: thoseProducts, count: count });
     },
 
+    matching: async function (req, res) {
+        var allPreferences = await Preference.find().populate("define");
+
+        return res.json(allPreferences);
+
+    },
+
     // find: async function (req, res) {
 
     // console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!entered")

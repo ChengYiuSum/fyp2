@@ -60,6 +60,7 @@ module.exports.routes = {
   'POST /user/wallet/:id': 'UserController.wallet',
   'GET /user/wallet/:id/value': 'UserController.value',
   'POST /user/wallet/update/:id': 'UserController.wallet_update',
+  'POST /user/card/remove/:id': 'UserController.remove_card',
 
   'POST /user/wallet/:id/value': 'ValueController.addValue',
 
@@ -85,6 +86,7 @@ module.exports.routes = {
 
   'GET /user/test': 'UserController.test',
 
+  'GET /preference/json': 'PriceTrackerController.matching',
 };
 
 

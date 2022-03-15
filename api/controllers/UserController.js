@@ -317,6 +317,20 @@ module.exports = {
         return res.ok();
     },
 
+    remove_card: async function (req, res) {
+        var thatUser = await User.findOne(req.session.userid);
+
+        if (!thatUser) return res.status(404).json("User not found.");
+
+        await User.updateOne(req.session.userid).set({ cardType: "", cardNum: "" });
+
+        req.session.cardNum = "";
+
+        req.session.cardType = "";
+
+        return res.ok();
+    },
+
     payment: async function (req, res) {
         var user = await User.findOne(req.session.userid).populate("records");
 

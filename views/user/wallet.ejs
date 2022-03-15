@@ -16,18 +16,34 @@
                     <b>Value:</b>
                     <%= user.value %>
                 </div>
+                <div class="level-right">
+                    <a class="level-item" aria-label="reply">
+                        <span class="icon is-small">
+                            <button class="fas fa-trash-alt" type="button" aria-hidden="true"
+                                onclick="deleteCard('<%= user.id %>')"></button>
+                        </span>
+                    </a>
+                </div>
                 <div class="columns">
                     <div class="column">
                         <div class="control">
                             <a href="http://localhost:1337/user/wallet/<%= user.id %>/value">
-                                <button class="button is-link">Add Value</button>
+                                <button class="button is-link">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-dollar-sign"></i>
+                                    </span>
+                                    <span>Add Value</span>
+                                </button>
                             </a>
                         </div>
                     </div>
                     <div class="column">
                         <div class="control">
                             <button class="js-modal-trigger button is-link" data-target="modal-js-example">
-                                Change Card
+                                <span class="icon is-small">
+                                    <i class="fas fa-credit-card"></i>
+                                </span>
+                                <span>Change Card</span>
                             </button>
                         </div>
 
@@ -176,4 +192,26 @@
             }
         });
     });
+</script>
+
+<script>
+    async function deleteCard(id) {
+        var r = confirm("Confirm Delete?", id);
+
+        if (r) {
+            var response = await fetch("/user/card/remove/" + id, {
+                method: "POST",
+            });
+
+            if (response.ok) {
+                alert("Card deleted.");
+                location.assign("/user/wallet/" + id);
+            } else {
+                alert(response.status + ": " + response.statusText);
+            }
+
+        } else {
+            alert("Cancelled");
+        }
+    };
 </script>
