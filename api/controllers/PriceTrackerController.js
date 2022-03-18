@@ -328,6 +328,27 @@ module.exports = {
 
         } else {
 
+            // var today = new Date()
+            // const today = new Date();
+
+            // let y = today.getFullYear();
+            // let m = today.getMonth() + 1;
+            // let d = today.getDate();
+
+            // console.log(today)
+            // console.log(y)
+            // console.log(m)
+            // console.log(d)
+
+
+            // var date = new Date(y, m, d);
+            // var date = y + "-" + m + "-" + d
+            // // console.log(req.body)
+            // console.log(req.body.expiryDate)
+            // console.log(date)
+
+            // if (req.body.expiryDate < date) return res.status(401).json("Invalid Expiry Date")
+
             var preference = await Preference.create(req.body).fetch();
 
             preferencedProduct = await PriceTracker.findOne(preference.own);
@@ -352,6 +373,8 @@ module.exports = {
                     })
                 }, function (err) { console.log(err || "It worked!") })
 
+                // return res.ok();
+
             } else {
                 console.log("match unsucess")
                 var message = "When the price fit your prefered price. You will get notice!"
@@ -367,6 +390,8 @@ module.exports = {
                         layout: false
                     })
                 }, function (err) { console.log(err || "It worked!") })
+                // return res.ok();
+
             }
 
             console.log(message)
@@ -427,9 +452,14 @@ module.exports = {
     },
 
     matching: async function (req, res) {
-        var allPreferences = await Preference.find().populate("define");
+        if (req.method == "GET") {
+            var allPreferences = await Preference.find().populate("define");
 
-        return res.json(allPreferences);
+            console.log("Success!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            console.log(allPreferences)
+
+            return res.json(allPreferences);
+        }
 
     },
 

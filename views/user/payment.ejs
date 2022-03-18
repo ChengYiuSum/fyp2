@@ -25,7 +25,7 @@
     <div class="container">
         <div class="columns">
             <div class="column is-four-fifths">
-                <input class="input" type="text" name="" value="<%= req.session.cardNum %>" disabled>
+                <input class="input" type="text" name="cardNum" value="<%= req.session.cardNum %>" disabled>
             </div>
 
             <div class="column is-one-fifth">
@@ -40,6 +40,7 @@
             By own value
         </label>
     </div>
+    <input type="hidden" name="method" value="ownValue">
     <input class="input" type="hidden" name="title" value="<%= user.records[user.records.length - 1].title %>">
     <input class="input" type="hidden" name="price" value="<%= user.records[user.records.length - 1].price %>">
     <input class="input" type="hidden" name="quantity" value="<%= user.records[user.records.length - 1].quantity %>">

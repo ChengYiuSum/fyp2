@@ -101,5 +101,69 @@ module.exports = {
         return res.json(value);
     },
 
+
+    setting: async function (req, res) {
+        if (req.method == "GET") return res.view('user/setting')
+
+        var time = req.body.time
+
+        var allPreferences = await Preference.find().populate("define");
+
+        return res.view('user/test', { time: time, preferences: allPreferences });
+
+    },
+
+    preference: async function (res, req) {
+        if (req.method == "GET") {
+
+            var allPreferences = await Preference.find().populate("define");
+
+            return res.json(allPreferences);
+        }
+    },
+
+    matching: async function (req, res) {
+        if (req.method == "GET") {
+            var allPreferences = await Preference.find().populate("define");
+
+            for (var i = 0; i < allPreferences.length; i++) {
+                console.log("AutoMatching~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+                var preferencedProduct = await PriceTracker.findOne(allPreferences[i].own)
+                if (parseInt(preferencedProduct.price.substring(1)) <= allPreferences[i].prePrice) {
+                    console.log("matched sucess")
+                    var message = "The price is below your prefered price now. You can click the \"add to cart \" button to purchase it!"
+
+                    sails.hooks['email-without-ejs'].send({
+                        to: "sammy3963@gmail.com",
+                        subject: "Testing",
+                        html: await sails.renderView('priceTracker/testEmail', {
+                            recipientNo: req.body.applyno,
+                            changesform: req.body,
+                            layout: false
+                        })
+                    }, function (err) { console.log(err || "It worked!") })
+                } else {
+                    const today = new Date();
+
+                    let y = today.getFullYear();
+                    let m = today.getMonth() + 1;
+                    let d = today.getDate();
+
+                    var date = y + "-" + m + "-" + d
+
+                    if (allPreferences[i].expiryDate < date) {
+                        await Preference.destroyOne(allPreferences[i].id);
+                    }
+                }
+            }
+
+            console.log("Success!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            console.log(allPreferences)
+
+            return res.json(allPreferences);
+        }
+
+    },
+
 };
 

@@ -1,10 +1,75 @@
-<body onload="startTime()">
-  <a class="control" id="txt">Today</a>
-  <a class="control" id="text">Testing</a>
+<body onload="startTime('<%= time %>')">
+  <!-- <a class="control" id="txt">Today</a> -->
+  <!-- <a class="control" id="text">Testing</a> -->
+  <!-- <%= time %> -->
+
+  <div class="content admin w-100">
+
+    <h3 style="font-size:4vw"><b>Preferences list</b></h3>
+
+    <section class="container-fluid">
+
+      <div class="row">
+        <div class="col ">
+          Total Number: <%= preferences.length %>
+        </div>
+      </div>
+      <br>
+
+      <table class="table table-striped">
+
+        <thead>
+          <th scope="col">Name <br></th>
+          <th scope="col">Title <br></th>
+          <th scope="col">Expiry Date <br></th>
+        </thead>
+
+        <tbody id="myTable">
+
+          <% preferences.forEach( function(preference) { %>
+
+            <tr>
+              <td>
+                <%= preference.define.name %>
+              </td>
+              <td>
+                <%= preference.title %>
+              </td>
+              <td>
+                <%= preference.expiryDate %>
+              </td>
+            </tr>
+            <% }); %>
+
+        </tbody>
+      </table>
+    </section>
+  </div>
 </body>
 
 <script>
-  function startTime() {
+  function startTime(time) {
+    setInterval(function () {
+      const today = new Date();
+
+      let d = today.getDay();
+      let h = today.getHours();
+      h = h - 5;
+      let m = today.getMinutes();
+      let s = today.getSeconds();
+
+      // alert(time)
+
+      // document.getElementById('txt').innerHTML = today;
+
+      // document.getElementById('txt').innerHTML = d + h + ":" + m + ":" + s;
+      // alert(time);
+    }, 1000)
+  } 
+</script>
+
+<!-- <script>
+  async function startTime(time) {
     const today = new Date();
 
     let d = today.getDay();
@@ -13,17 +78,21 @@
     let m = today.getMinutes();
     let s = today.getSeconds();
 
+    alert(time)
+
     // document.getElementById('txt').innerHTML = d + h + ":" + m + ":" + s;
-    document.getElementById('txt').innerHTML = today;
+    // document.getElementById('txt').innerHTML = today;
     // print(d + h + m)
 
-
-    if (m % 1 == 0) {
-      alert("testing")
+    if (m % time == 0 && s == 0) {
+      alert("success")
+      // var preferences = await fetch("/admin/preference/matching", {
+      //   method: "GET"
+      // });
     } else {
-      alert("not work")
+      // alert("not work " + settime)
     }
 
     setTimeout(startTime, 1000);
   }
-</script>
+</script> -->

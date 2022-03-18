@@ -92,12 +92,6 @@ module.exports = {
         return res.json(everyuser);
     },
 
-    setting: async function (req, res) {
-        if (req.method == "GET") return res.view('user/setting')
-
-        return res.redirect('/priceTracker/homepage');
-    },
-
     account: async function (req, res) {
         if (req.method == "GET") {
 
@@ -270,6 +264,8 @@ module.exports = {
 
             var payment = await Payment.create(req.body).fetch();
 
+            console.log(req.body.method)
+
             console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
             console.log(payment)
 
@@ -343,6 +339,11 @@ module.exports = {
 
         }
 
+        // var purchase = await Purchase.create(req.body).fetch();
+
+        // console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        // console.log(purchase)
+
         var product = await User.findOne(req.session.userid).populate("products");
 
         if (product.products.length > 1) {
@@ -353,11 +354,19 @@ module.exports = {
             await User.removeFromCollection(req.session.userid, "products").members(product.products[0].id);
         }
 
-        if (payment.payments[payment.payments.length - 1].total > req.session.value) {
-            return res.status(401).json("You have not enough money in your account!\n1. Please add money to your account.\n2. Please pay by credit card.")
+        // var test = await Payment.create(req.body).fetch();
+
+        // console.log(test)
+
+        if (test.method == "ownValue") {
+            if (payment.payments[payment.payments.length - 1].total > req.session.value) {
+                return res.status(401).json("You have not enough money in your account!\n1. Please add money to your account.\n2. Please pay by credit card.")
+            } else {
+                await User.updateOne(req.session.userid).set({ value: user.value.toFixed(1) - payment.payments[payment.payments.length - 1].total.toFixed(1) });
+                req.session.value = user.value.toFixed(1) - payment.payments[payment.payments.length - 1].total.toFixed(1)
+                return res.ok()
+            }
         } else {
-            await User.updateOne(req.session.userid).set({ value: user.value - payment.payments[payment.payments.length - 1].total });
-            req.session.value = user.value - payment.payments[payment.payments.length - 1].total
             return res.ok()
         }
     },

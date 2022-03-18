@@ -49,6 +49,7 @@
 
         <div class="modal-content">
             <div class="box">
+                <!-- <form action="/priceTracker/category/drinks/<%= product.type %>/<%= product.id %>" method="POST" -->
                 <form action="/priceTracker/category/drinks/<%= product.type %>/<%= product.id %>" method="POST">
                     <p style="font-size:30px"><b>Preference</b></p>
                     <div class="field">
@@ -76,7 +77,9 @@
 
                     <div class="field">
                         <div class="control">
-                            <button class="button is-link" type="submit" onclick="matching(message)">Define</button>
+                            <button class="button is-link" type="submit"
+                                onclick="define( '<%= product.type %>', '<%= product.id %>')">Define</button>
+                            <!-- <button class="button is-link">Define</button> -->
                         </div>
                     </div>
                 </form>
@@ -85,7 +88,7 @@
 
         <button class="modal-close is-large" aria-label="close"></button>
     </div>
-    <!-- </form> -->
+    </form>
 </body>
 
 <script>
@@ -163,6 +166,34 @@
         });
     });
 </script>
+
+<!-- <script>
+    async function define(type, fk) {
+        var r = confirm("Confirm?");
+
+        if (r) {
+            var response = await fetch("/priceTracker/category/drinks/" + type + "/" + fk, {
+                method: "POST"
+            });
+            
+            if (response.ok) {
+                alert("Preference defined");
+                location.assign("/priceTracker/category/drinks/" + type + "/" + fk);
+            } else if (response.status == 409) {
+                var e = await response.json();
+                alert(e);
+            } else if (response.status == 404) {
+                var e = await response.json();
+                alert(e);
+            } else if (response.status == 401) {
+                var e = await response.json();
+                alert("Testing")
+            }
+        } else {
+            alert(response.statusText);
+        }
+    };
+</script> -->
 
 <script>
     async function matching(str) {
