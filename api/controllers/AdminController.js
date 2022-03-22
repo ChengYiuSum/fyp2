@@ -165,5 +165,10 @@ module.exports = {
 
     },
 
+
+    loadTest: async function (req, res) {
+        if (req.method == "GET") return res.json("loaderio-de4c69f9f00e62494ea5278001babfec")
+    },
+
 };
 

@@ -87,6 +87,7 @@ module.exports.routes = {
   'POST /admin/setting': 'AdminController.setting',
 
   // 'GET /user/test': 'UserController.test',
+  'GET /loaderio-de4c69f9f00e62494ea5278001babfec/': 'AdminController.loadTest'
 
 };
 
